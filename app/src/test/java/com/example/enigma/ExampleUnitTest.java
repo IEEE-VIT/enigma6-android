@@ -1,4 +1,4 @@
-package com.example.enigmaandroid;
+package com.example.enigma;
 
 import org.junit.Test;
 
