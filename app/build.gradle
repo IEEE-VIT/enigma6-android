@@ -27,11 +27,21 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+
+    //Google Login
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+
     //Material Design Dependency
     implementation "com.google.android.material:material:1.1.0-alpha10"
 
     //Firebase Authentication Dependency
     implementation 'com.google.firebase:firebase-auth:19.0.0'
+
+    //Firebase core
+    implementation 'com.google.firebase:firebase-core:17.2.0'
+
+    //Facebook SDK
+    implementation 'com.facebook.android:facebook-android-sdk:5.5.1'
 
 }
 

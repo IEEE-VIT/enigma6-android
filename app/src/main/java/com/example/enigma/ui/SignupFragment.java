@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +14,6 @@ import com.example.enigma.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
@@ -25,10 +25,11 @@ public class SignupFragment extends Fragment {
     private TextInputEditText email;
     private TextInputEditText password;
     private TextInputEditText confirmPassword;
-    private MaterialButton signUp;
+    private MaterialButton signUpButton;
     private String emailText;
     private String passwordText;
     private FirebaseAuth auth;
+    private TextView login;
     private FirebaseUser user;
 
     public SignupFragment() {
@@ -40,14 +41,10 @@ public class SignupFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
 
-        email = rootView.findViewById(R.id.email_text_edit);
-        password = rootView.findViewById(R.id.password_text_edit);
-        confirmPassword = rootView.findViewById(R.id.confirm_password_text_edit);
-        signUp = rootView.findViewById(R.id.login_button);
-        auth = FirebaseAuth.getInstance();
+        initialize(rootView);
 
 
-        signUp.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -58,23 +55,26 @@ public class SignupFragment extends Fragment {
                     signUpProcess(emailText, passwordText);
                 }
 
-                else if(! password.getText().toString().matches(confirmPassword.getText().toString()))
+                //TODO:Ask Sparsh Bhaiya about it
+                else
                 {
-                    Snackbar.make(signUp,"Enter password fields correctly",BaseTransientBottomBar.LENGTH_SHORT)
-                            .show();
-                }
-
-                // check with sparsh bhaiya for empty fields
-                else if(email.getText().toString().isEmpty() || password.getText().toString().isEmpty()
-                        || confirmPassword.getText().toString().isEmpty())
-                {
-                    Snackbar.make(signUp,"Empty fields",BaseTransientBottomBar.LENGTH_SHORT)
+                    Snackbar.make(signUpButton, "Enter all the fields", Snackbar.LENGTH_SHORT)
                             .show();
                 }
 
             }
         });
         return rootView;
+    }
+
+    private void initialize(View rootView) {
+
+        email = rootView.findViewById(R.id.email_text_edit_sign_up_fragment);
+        password = rootView.findViewById(R.id.password_text_edit_sign_up_fragment);
+        confirmPassword = rootView.findViewById(R.id.confirm_password_text_edit_sign_up_fragment);
+        signUpButton = rootView.findViewById(R.id.sign_up_button_sign_up_fragment);
+        login = rootView.findViewById(R.id.login_text_view_sign_up_fragment);
+        auth = FirebaseAuth.getInstance();
     }
 
     private void signUpProcess(String email, String password) {
@@ -86,19 +86,20 @@ public class SignupFragment extends Fragment {
                         user = auth.getCurrentUser();
                         if(task.isSuccessful())
                         {
-                                    user.sendEmailVerification()
+                            user.sendEmailVerification()
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful())
                                             {
-                                                Snackbar.make(signUp,"Verification mail sent check your mail",BaseTransientBottomBar.LENGTH_SHORT)
+                                                Snackbar.make(signUpButton,"Verification mail sent check your mail",Snackbar.LENGTH_SHORT)
                                                         .show();
+
 
                                             }
                                             else
                                             {
-                                                Snackbar.make(signUp,"Some Error occured Try later",BaseTransientBottomBar.LENGTH_SHORT)
+                                                Snackbar.make(signUpButton,"Some Error occured Try later",Snackbar.LENGTH_SHORT)
                                                         .show();
                                             }
 
@@ -107,7 +108,7 @@ public class SignupFragment extends Fragment {
                         }
                         else
                         {
-                            Snackbar.make(signUp,"Please enter password of atleast 6 characters",BaseTransientBottomBar.LENGTH_SHORT)
+                            Snackbar.make(signUpButton,"Please enter password of atleast 6 characters",Snackbar.LENGTH_SHORT)
                                     .show();
                         }
                     }

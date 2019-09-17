@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="411dp"
+        android:layout_height="189dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/hoodie_3" />
+
+    <TextView
+        android:id="@+id/set_up_your_profile_text_view"
+        android:layout_width="164dp"
+        android:layout_height="79dp"
+        android:fontFamily="@font/chosence"
+        android:text="@string/set_profile"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.251"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout1"
+        android:layout_width="306dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="35dp"
+        android:clickable="true"
+        android:focusable="auto"
+        android:focusableInTouchMode="false"
+        android:hint="@string/email"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_text_edit_set_profile_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:textColorLink="@color/white"
+            android:textCursorDrawable="@color/design_default_color_background"
+            android:textStyle="normal"
+            app:fontFamily="@font/saira" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
+        android:layout_width="306dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="auto"
+        android:focusableInTouchMode="false"
+        android:hint="@string/first_name"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/first_name_text_edit_set_profile_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:textColorLink="@color/white"
+            android:textCursorDrawable="@color/design_default_color_background"
+            android:textStyle="normal"
+            app:fontFamily="@font/saira" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout3"
+        android:layout_width="307dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="auto"
+        android:focusableInTouchMode="false"
+        android:hint="@string/last_name"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/last_name_text_edit_set_profile_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:textColorLink="@color/white"
+            android:textCursorDrawable="@color/design_default_color_background"
+            android:textStyle="normal"
+            app:fontFamily="@font/saira" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout4"
+        android:layout_width="307dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:focusable="auto"
+        android:focusableInTouchMode="false"
+        android:hint="@string/username"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/username_text_edit_set_profile_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:textColorLink="@color/white"
+            android:textCursorDrawable="@color/design_default_color_background"
+            android:textStyle="normal"
+            app:fontFamily="@font/saira" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/done_button_set_profile_fragment"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="@string/done"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:backgroundTint="@color/green"
+        app:fontFamily="@font/saira"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
