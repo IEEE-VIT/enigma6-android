@@ -2,12 +2,10 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212">
-
-    <!-- Scrollable view here -->
+    android:background="#121212"
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -15,19 +13,16 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:collapsedTitleGravity="center"
-            app:collapsedTitleTextAppearance="@style/ItemFont"
-            app:contentScrim="@color/lightGrey"
-            app:expandedTitleGravity="center"
-            app:expandedTitleTextAppearance="@style/ItemFont"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:title="@string/rules"
-            app:titleEnabled="false">
+            app:expandedTitleTextAppearance="@style/ItemFont"
+            app:expandedTitleGravity="center"
+            android:layout_height="match_parent"
+            app:contentScrim="@color/lightGrey"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="185dp"
+                android:layout_height="203dp"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/road"
                 app:layout_collapseParallaxMultiplier="0.5" />
@@ -41,6 +36,15 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/recycler_rules"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_below="@id/AppBar"
+       android:scrollbars="vertical"
+       app:layout_behavior="@string/appbar_scrolling_view_behavior"
+       />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

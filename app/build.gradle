@@ -43,6 +43,10 @@ dependencies {
     //Design Library
     implementation 'com.google.android.material:material:1.0.0'
 
+    //Recycler View
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+
 }
 
 //Firebase Plugin
