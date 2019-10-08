@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+<group android:checkableBehavior="single">
+    <item
+        android:id="@+id/nav_rules_fragment"
+        android:icon="@mipmap/rule"
+        android:title="@string/rules" />
+    <item
+        android:id="@+id/nav_game_fragment"
+        android:icon="@mipmap/game"
+        android:title="@string/game" />
+    <item
+        android:id="@+id/nav_leaderboard_fragment"
+        android:icon="@mipmap/leaderboard"
+        android:title="@string/leaderboard" />
+    <item
+        android:id="@+id/nav_profile_fragment"
+        android:icon="@mipmap/profile"
+        android:title="@string/profile" />
+    <item
+        android:id="@+id/nav_logout_fragment"
+        android:icon="@mipmap/logout"
+        android:title="@string/logout" />
+
+</group>
+
+    </menu>

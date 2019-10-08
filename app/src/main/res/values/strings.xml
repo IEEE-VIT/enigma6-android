@@ -17,7 +17,11 @@
     <string name="last_name">Last Name</string>
     <string name="username">Username</string>
     <string name="done">DONE</string>
-
+    <string name="rules">RULES</string>
+    <string name="profile">PROFILE</string>
+    <string name="game">GAME</string>
+    <string name="leaderboard">LEADERBOARD</string>
+    <string name="logout">LOGOUT</string>
     //Facebook
     <string name="facebook_app_id">2419120248362869</string>
     <string name="fb_login_protocol_scheme">fb2419120248362869</string>

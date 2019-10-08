@@ -141,13 +141,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="26dp"
         android:text="@string/account"
         android:textColor="@color/blue"
         android:textSize="16sp"
-        app:fontFamily="@font/saira"
         android:textStyle="normal"
+        app:fontFamily="@font/saira"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
         app:layout_constraintTop_toBottomOf="@+id/sign_up_button_sign_up_fragment" />
 
