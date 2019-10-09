@@ -43,12 +43,27 @@ public class ScrollableRulesFragment extends Fragment {
     }
 
     private void prepareRulesData() {
-        Rules rule = new Rules("Rule and rule and rule and rule enigma enigma enigma enigma enigma ");
+        Rules rule = new Rules("For every correct answer without using hints,you will get x points ");
         rulesList.add(rule);
-
-
-         rule = new Rules("enigma enigma enigma enigma enigma");
+        rule = new Rules("For every correct answer without using hints,you will get x points");
         rulesList.add(rule);
-
+        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rulesList.add(rule);
+        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rulesList.add(rule);
+        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rulesList.add(rule);
+        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rulesList.add(rule);
+        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rulesList.add(rule);
+        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rulesList.add(rule);
+        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rulesList.add(rule);
+        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rulesList.add(rule);
+        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rulesList.add(rule);
     }
 }
