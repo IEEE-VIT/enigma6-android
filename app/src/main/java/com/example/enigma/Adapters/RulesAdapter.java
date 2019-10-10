@@ -3,22 +3,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.enigma.Models.Rules;
 import com.example.enigma.R;
-
-
 import java.util.ArrayList;
 
 
 public class RulesAdapter extends RecyclerView.Adapter<RulesAdapter.ViewHolder> {
 
-    private ArrayList <Rules> rules;
+    private ArrayList <Rules> rulesList;
 
     public RulesAdapter(ArrayList<Rules> rules) {
-        this.rules = rules;
+        this.rulesList = rules;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -29,8 +26,6 @@ public class RulesAdapter extends RecyclerView.Adapter<RulesAdapter.ViewHolder> 
             super(itemView);
             rule = (TextView)itemView.findViewById(R.id.rule);
         }
-
-
     }
 
     @NonNull
@@ -43,12 +38,12 @@ public class RulesAdapter extends RecyclerView.Adapter<RulesAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            Rules rules1 = rules.get(position);
-            holder.rule.setText(rules1.getRule());
+            Rules rule = rulesList.get(position);
+            holder.rule.setText(rule.getRule());
     }
 
     @Override
     public int getItemCount() {
-        return rules.size();
+        return rulesList.size();
     }
 }

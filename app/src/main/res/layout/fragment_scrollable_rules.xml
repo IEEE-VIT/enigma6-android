@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,12 +14,14 @@
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            app:title="@string/rules"
-            app:expandedTitleTextAppearance="@style/ItemFont"
-            app:expandedTitleGravity="center"
             android:layout_height="wrap_content"
+            app:collapsedTitleGravity="center"
             app:contentScrim="@color/lightGrey"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:expandedTitleGravity="center|center_horizontal"
+            app:expandedTitleTextAppearance="@style/ItemFont"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:title="@string/rules"
+            app:titleEnabled="false">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -31,15 +34,15 @@
                 android:id="@+id/AppBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_collapseMode="pin" >
+                app:layout_collapseMode="pin">
 
-                <TextView
+                <ImageView
+                    android:id="@+id/rules_hamburger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/rules"
-                    android:fontFamily="@font/chosence"
-                    android:gravity="center"
-                    android:textSize="14sp"/>
+                    android:foregroundGravity="left"
+                    android:src="@mipmap/hamburger"
+                    />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -47,14 +50,14 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/recycler_rules"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_below="@id/AppBar"
-       android:scrollbars="vertical"
-       app:layout_behavior="@string/appbar_scrolling_view_behavior"
-       />
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_rules"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/AppBar"
+        android:scrollbarThumbVertical="@drawable/rules_scrollbar"
+        android:scrollbarSize="1dp"
+        android:scrollbars="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

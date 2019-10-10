@@ -25,7 +25,9 @@
                 android:layout_height="203dp"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/winner"
-                app:layout_collapseParallaxMultiplier="0.5" />
+                app:layout_collapseParallaxMultiplier="0.5"
+                />
+
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/AppBar1"
@@ -35,19 +37,11 @@
 
 
                 <ImageView
+                    android:id="@+id/leaderboard_hamburger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:foregroundGravity="left"
-                    android:src="@mipmap/hamburger"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/leaderboard"
-                    android:fontFamily="@font/chosence"
-                    android:gravity="center"
-                    android:textSize="14sp"
-                    android:paddingLeft="30dp"/>
+                    android:src="@mipmap/hamburger" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -56,10 +50,9 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_rules"
+        android:id="@+id/recycler_leaderboard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/AppBar"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
