@@ -25,9 +25,13 @@
     <string name="rules">RULES</string>
     <string name="profile">PROFILE</string>
     <string name="game">GAME</string>
+    <string name="enigma">ENIGMA</string>
+    <string name="version">6.0</string>
     <string name="leaderboard">LEADERBOARD</string>
     <string name="logout">LOGOUT</string>
+    <string name="submit">SUBMIT</string>
     <string name="name">NAME</string>
+    <string name="answer">Type Your Answer Here</string>
     <string name="hints_used">HINTS USED</string>
     <string name="questions_solved">QUESTIONS SOLVED</string>
     //Facebook

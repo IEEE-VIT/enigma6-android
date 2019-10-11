@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
-
+import com.example.enigma.Fragments.GameFragment;
 import com.example.enigma.Fragments.ScrollableLeaderboardFragment;
 import com.example.enigma.Fragments.ScrollablePofileFragment;
 import com.example.enigma.Fragments.ScrollableRulesFragment;
@@ -52,6 +52,11 @@ public class WorkingActivity extends AppCompatActivity {
                     case R.id.item_profile:
                         drawer.closeDrawer(Gravity.LEFT, true);
                         transaction(new ScrollablePofileFragment());
+                        break;
+
+                    case R.id.item_game:
+                        drawer.closeDrawer(Gravity.LEFT, true);
+                        transaction(new GameFragment());
                         break;
                 }
                 return true;

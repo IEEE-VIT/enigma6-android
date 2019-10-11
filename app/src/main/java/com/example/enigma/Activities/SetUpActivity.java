@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
+import com.example.enigma.Fragments.GameFragment;
 import com.example.enigma.Fragments.LoginFragment;
 import com.example.enigma.Fragments.RulesFragment;
 import com.example.enigma.Fragments.ScrollableRulesFragment;
@@ -27,7 +28,7 @@ public class SetUpActivity extends AppCompatActivity {
 
         initialize();
 
-        transaction(new RulesFragment());
+        transaction(new GameFragment());
 
         mSwitchToOtherFragments = new SwitchToOtherFragments() {
             @Override

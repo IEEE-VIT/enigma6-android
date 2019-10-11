@@ -57,40 +57,33 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_login, container, false);
-
         initialize(rootView);
-
         googleLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 googleLoginProcess();
             }
         });
-
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changePassword();
             }
         });
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 normalLogin();
             }
         });
-
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SetUpActivity.getmSwitchToOtherFragments().goToSignUpFragment();
             }
         });
-
         return rootView;
     }
-
 
     private void initialize(View rootView) {
         googleLogin = rootView.findViewById(R.id.login_google_button);
@@ -119,7 +112,6 @@ public class LoginFragment extends Fragment {
     }
 
     private void changePassword() {
-
         if(email.getText()!= null && email.getText().length()>0 ) {
             auth.sendPasswordResetEmail(email.getText().toString())
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -140,10 +132,6 @@ public class LoginFragment extends Fragment {
             makeSnackbar("Please enter the email field for this feature", forgotPassword);
         }
     }
-
-
-
-
 
     private void googleLoginProcess() {
         Intent signInIntent = googleSignInClient.getSignInIntent();
@@ -199,7 +187,6 @@ public class LoginFragment extends Fragment {
             makeSnackbar("Please enter all the fields", login);
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
