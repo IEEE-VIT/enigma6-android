@@ -40,14 +40,20 @@ public class WorkingActivity extends AppCompatActivity {
                 switch (item.getItemId())
                 {
                     case R.id.item_rules:
+                        drawer.closeDrawer(Gravity.LEFT, true);
                         transaction(new ScrollableRulesFragment());
                         break;
 
                     case R.id.item_leaderboard:
+                        drawer.closeDrawer(Gravity.LEFT, true);
                         transaction(new ScrollableLeaderboardFragment());
                         break;
+
+                    case R.id.item_profile:
+                        drawer.closeDrawer(Gravity.LEFT, true);
+                        transaction(new ScrollablePofileFragment());
+                        break;
                 }
-                drawer.closeDrawer(Gravity.LEFT, true);
                 return true;
             }
         });

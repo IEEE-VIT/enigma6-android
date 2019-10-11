@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.enigma.Activities.SetUpActivity;
 import com.example.enigma.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,10 +44,16 @@ public class SignupFragment extends Fragment {
 
         initialize(rootView);
 
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SetUpActivity.getmSwitchToOtherFragments().goToLoginFragment();
+            }
+        });
+
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (email.getText() != null && password.getText() != null && confirmPassword.getText() != null) {
                     if(password.getText().toString().matches(confirmPassword.getText().toString()))
                     {
@@ -65,14 +72,12 @@ public class SignupFragment extends Fragment {
                     Snackbar.make(signUpButton, "Enter all the fields", Snackbar.LENGTH_SHORT)
                             .show();
                 }
-
             }
         });
         return rootView;
     }
 
     private void initialize(View rootView) {
-
         email = rootView.findViewById(R.id.email_text_edit_sign_up_fragment);
         password = rootView.findViewById(R.id.password_text_edit_sign_up_fragment);
         confirmPassword = rootView.findViewById(R.id.confirm_password_text_edit_sign_up_fragment);
@@ -82,7 +87,6 @@ public class SignupFragment extends Fragment {
     }
 
     private void signUpProcess(String email, String password) {
-
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
