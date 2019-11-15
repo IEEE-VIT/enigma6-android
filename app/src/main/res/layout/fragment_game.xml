@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/game_hamburger"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/yellow_hamburger" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="90dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/chosence"
+            android:gravity="center_horizontal"
+            android:text="@string/enigma"
+            android:textColor="@color/yellow"
+            android:textSize="40sp"
+            tools:layout_editor_absoluteX="136dp"
+            tools:layout_editor_absoluteY="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginBottom="25dp"
+            android:fontFamily="@font/chosence"
+            android:gravity="center_horizontal"
+            android:text="@string/version"
+            android:textColor="@color/yellow"
+            android:textSize="20sp" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="413dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black">
+
+            <ImageView
+                android:id="@+id/question_image"
+                android:layout_width="316dp"
+                android:layout_height="240dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/game_image" />
+
+            <EditText
+                android:id="@+id/answer_edit_text_game_fragment"
+                android:layout_width="338dp"
+                android:layout_height="102dp"
+                android:layout_marginStart="29dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="29dp"
+                android:background="@drawable/custom_edit_text"
+                android:focusable="auto"
+                android:fontFamily="@font/saira_regular"
+                android:gravity="start"
+                android:hint="@string/answer"
+                android:inputType="textMultiLine"
+                android:longClickable="false"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false"
+                android:selectAllOnFocus="false"
+                android:textAlignment="gravity"
+                app:layout_constraintBottom_toTopOf="@+id/submit_material_button_game_fragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.74"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/question_text_view_game_fragment" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/question_image"
+                app:layout_constraintHorizontal_bias="0.025"
+                app:layout_constraintStart_toStartOf="@+id/question_image"
+                app:layout_constraintTop_toTopOf="@+id/question_image"
+                app:srcCompat="@color/yellow" />
+
+
+            <ImageView
+                android:id="@+id/hint_image_game_fragment"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/question_image"
+                app:layout_constraintEnd_toEndOf="@+id/question_image"
+                app:layout_constraintHorizontal_bias="0.022"
+                app:layout_constraintStart_toStartOf="@+id/question_image"
+                app:srcCompat="@color/yellow" />
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/hint_image_game_fragment"
+                app:layout_constraintEnd_toEndOf="@+id/hint_image_game_fragment"
+                app:layout_constraintStart_toStartOf="@+id/hint_image_game_fragment"
+                app:layout_constraintTop_toTopOf="@+id/hint_image_game_fragment"
+                app:srcCompat="@mipmap/key" />
+
+
+            <TextView
+                android:id="@+id/question_text_view_game_fragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="29dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="29dp"
+                android:fontFamily="@font/saira_regular"
+                android:gravity="center_horizontal"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipis cing elit, sed do eiusmod tempor incididunt ut l abore et dolore magna aliqua. Ut enim ad mini m veniam, quis nostrud exercitation ullamco la boris nisi ut aliquip ex ea commodo consequat.  Duis aute irure dolor in reprehenderit in volupt ate velit esse cillum dolore eu fugiat nulla paria tur. "
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/answer_edit_text_game_fragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/question_image" />
+
+            <TextView
+                android:id="@+id/question_number_text_view_game_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/saira_regular"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+                app:layout_constraintEnd_toEndOf="@+id/imageView9"
+                app:layout_constraintStart_toStartOf="@+id/imageView9"
+                app:layout_constraintTop_toTopOf="@+id/imageView9" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/submit_material_button_game_fragment"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:gravity="center"
+                android:text="@string/submit"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                app:backgroundTint="@color/yellow"
+                app:fontFamily="@font/saira"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/answer_edit_text_game_fragment"
+                app:layout_constraintVertical_bias="0.029999971" />
+
+            <ProgressBar
+                android:id="@+id/game_fragment_progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/yellow"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/answer_edit_text_game_fragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.553" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

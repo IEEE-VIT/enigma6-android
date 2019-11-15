@@ -1,0 +1,51 @@
+package com.example.enigma.Models;
+
+public class CurPlayer {
+
+    private String name;
+    private int points;
+    private int rank;
+    private int level;
+
+    public CurPlayer() {
+    }
+
+    public CurPlayer(String name, int points, int rank, int level) {
+        this.name = name;
+        this.points = points;
+        this.rank = rank;
+        this.level = level;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+}
