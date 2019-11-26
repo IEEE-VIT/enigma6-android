@@ -2,6 +2,7 @@ package com.example.enigma.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,14 @@ import androidx.fragment.app.Fragment;
 import com.example.enigma.Activities.SetUpActivity;
 import com.example.enigma.Activities.WorkingActivity;
 import com.example.enigma.BuildConfig;
+import com.example.enigma.Interfaces.ChangeProfile;
 import com.example.enigma.Interfaces.FetchUserProfile;
 import com.example.enigma.Interfaces.RegisteringUser;
+import com.example.enigma.Models.ChangeUserName;
 import com.example.enigma.Models.FetchingUserProfile;
 import com.example.enigma.Models.RegistrationResponse;
 import com.example.enigma.Models.UserDetails;
+import com.example.enigma.Models.Name;
 import com.example.enigma.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -53,8 +57,9 @@ public class UserProfileFragment extends Fragment {
                 {
                     username = usernameTextView.getText().toString();
                     UserDetails details = new UserDetails(username, auth.getCurrentUser().getEmail());
+                    Name name = new Name(username);
                     pBar.setVisibility(View.VISIBLE);
-                    registerUser(details);
+                    registerUser(details, name);
                 }
                 else
                 {
@@ -98,8 +103,8 @@ public class UserProfileFragment extends Fragment {
                             startActivity(intent);
                             getActivity().finish();
                         }
-                    pBar.setVisibility(View.INVISIBLE);
                     }
+                pBar.setVisibility(View.INVISIBLE);
                 }
 
                 @Override
@@ -123,24 +128,48 @@ public class UserProfileFragment extends Fragment {
         }
     }
 
-    private void registerUser(UserDetails details) {
-        Retrofit.Builder builder = new Retrofit.Builder()
+    private void registerUser(UserDetails details, final Name name) {
+        final Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create());
 
-        Retrofit retrofit = builder.build();
+        final Retrofit retrofit = builder.build();
 
-        RegisteringUser user = retrofit.create(RegisteringUser.class);
+        final RegisteringUser user = retrofit.create(RegisteringUser.class);
         Call<RegistrationResponse> call = user.registerPlayer(auth.getCurrentUser().getUid(), details);
         call.enqueue(new Callback<RegistrationResponse>() {
             @Override
-            public void onResponse(Call<RegistrationResponse> call, Response<RegistrationResponse> response) {
+            public void onResponse(Call<RegistrationResponse> call, final Response<RegistrationResponse> response) {
                 RegistrationResponse registrationResponse = response.body();
                 if(registrationResponse.getStatusCode()==200 && (registrationResponse.isRegSuccess() ||
                         registrationResponse.getPayload().getMsg().equals("User already registered, Signing In!")))
                 {
-                    SetUpActivity.getmSwitchToOtherFragments().goToRulesFragment();
-                    pBar.setVisibility(View.INVISIBLE);
+
+                    final ChangeProfile profile = retrofit.create(ChangeProfile.class);
+                    Call<ChangeUserName> call1 = profile.changeUserName(auth.getCurrentUser().getUid(), username);
+                    call1.enqueue(new Callback<ChangeUserName>() {
+                        @Override
+                        public void onResponse(Call<ChangeUserName> call, Response<ChangeUserName> response1) {
+                            if(response1.body()!=null) {
+                                if (response1.body().getStatusCode() == 200) {
+                                    SetUpActivity.getmSwitchToOtherFragments().goToRulesFragment();
+                                    pBar.setVisibility(View.INVISIBLE);
+                                }
+                            }
+                            else
+                            {
+                                makeSnackbar(done, "Some Error Occured!");
+                                pBar.setVisibility(View.INVISIBLE);
+                                Log.d("Hello", name.getName());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ChangeUserName> call, Throwable t) {
+                            int c = 10;
+                        }
+                    });
+
                 }
                 else
                 {

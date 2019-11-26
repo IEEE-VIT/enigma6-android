@@ -25,6 +25,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+import java.util.Random;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +46,12 @@ public class GameFragment extends Fragment {
     private TextView answer;
     private String imgURL;
     private ProgressBar progressBar;
+    private ArrayList<String> taunt1 = new ArrayList<>();
+    private ArrayList<String> taunt2 = new ArrayList<>();
+    private ArrayList<String> taunt3 = new ArrayList<>();
+    private ArrayList<String> taunt4 = new ArrayList<>();
+    private Random random = new Random();
+
 
     public GameFragment() {
     }
@@ -94,6 +102,22 @@ public class GameFragment extends Fragment {
         questionImage = rootView.findViewById(R.id.question_image);
         questionHint = rootView.findViewById(R.id.hint_image_game_fragment);
         progressBar = rootView.findViewById(R.id.game_fragment_progress_bar);
+        taunt1.add("Almost There! Think Harder");
+        taunt1.add("You're nearly there!");
+        taunt1.add("Quiet close! Come on!");
+
+        taunt2.add("Close, but not close enough.");
+        taunt2.add("You are on the right path.");
+        taunt2.add("Think. Think harder!");
+
+        taunt3.add("You might be thinking along these lines.");
+        taunt3.add("Nice approach. But, try harder.");
+        taunt3.add("Think you're smart?");
+
+        taunt4.add("Nope. Try using a hint?");
+        taunt4.add("Ah you are better than this. Use a hint.");
+        taunt4.add("Faar from home. Use your hint!");
+
     }
 
     private void getHint() {
@@ -175,9 +199,24 @@ public class GameFragment extends Fragment {
                             hint=null;
                             answer.setText("");
                         }
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        makeSnackbar(submit, "OOPS Wrong Answer!");
+                        switch (response.body().getPayload().getHowClose())
+                        {
+                            case "4" : progressBar.setVisibility(View.GONE);
+                                       makeSnackbar(submit, taunt4.get(random.nextInt(taunt4.size())));
+                                       break;
+
+                            case "3" : progressBar.setVisibility(View.GONE);
+                                makeSnackbar(submit, taunt3.get(random.nextInt(taunt3.size())));
+                                break;
+
+                            case "2" : progressBar.setVisibility(View.GONE);
+                                makeSnackbar(submit, taunt2.get(random.nextInt(taunt2.size())));
+                                break;
+
+                            case "1" : progressBar.setVisibility(View.GONE);
+                                makeSnackbar(submit, taunt1.get(random.nextInt(taunt1.size())));
+                                break;
+                        }
                     }
                 }
 

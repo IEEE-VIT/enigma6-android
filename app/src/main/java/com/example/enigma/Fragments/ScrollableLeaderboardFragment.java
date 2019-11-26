@@ -1,5 +1,6 @@
 package com.example.enigma.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +20,20 @@ import com.example.enigma.Models.CurPlayer;
 import com.example.enigma.Models.FetchingLeaderboard;
 import com.example.enigma.Models.Leaderboard;
 import com.example.enigma.R;
+import com.google.android.gms.common.api.Api;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
+import java.util.logging.Level;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ScrollableLeaderboardFragment extends Fragment {
 
@@ -37,6 +45,9 @@ public class ScrollableLeaderboardFragment extends Fragment {
     private Leaderboard l;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Leaderboard> leaderboardList = new ArrayList<>();
+    private CurPlayer curPlayer;
+    private Integer count;
+    private SharedPreferences sharedPreferences;
 
     public ScrollableLeaderboardFragment() {
     }
@@ -63,13 +74,16 @@ public class ScrollableLeaderboardFragment extends Fragment {
     }
 
     private void initializeViews(View rootView) {
-        adapter = new LeaderboardAdapter(leaderboardList);
+        adapter = new LeaderboardAdapter(leaderboardList, getContext());
         recyclerView = rootView.findViewById(R.id.recycler_leaderboard);
         hamburger = rootView.findViewById(R.id.leaderboard_hamburger);
         layoutManager = new LinearLayoutManager(getContext());
         auth = FirebaseAuth.getInstance();
         progressBar = rootView.findViewById(R.id.scrollable_leaderboard_progress_bar);
+        count = 0;
+        sharedPreferences = getContext().getSharedPreferences("Current", MODE_PRIVATE);
     }
+
 
         private void prepareLeaderboard() {
         Retrofit.Builder builder = new Retrofit.Builder()
@@ -84,34 +98,43 @@ public class ScrollableLeaderboardFragment extends Fragment {
         call.enqueue(new Callback<FetchingLeaderboard>() {
             @Override
             public void onResponse(Call<FetchingLeaderboard> call, Response<FetchingLeaderboard> response) {
+                count=0;
                 FetchingLeaderboard body = response.body();
                 CurPlayer[] leaderboard = body.getPayload().getLeaderBoard();
                 l = new Leaderboard("RANK", "NAME", "QUES", "SCORE");
                 leaderboardList.add(l);
 
-
+                curPlayer = body.getPayload().getCurPlayer();
 
                 for (CurPlayer player : leaderboard) {
                     String name = player.getName();
                     int level = player.getLevel();
-                    int points = player.getPoints();
+                    double points = player.getPoints();
                     int rank = player.getRank();
+
+                    if (curPlayer.getName().equals(name))
+                        count = 1;
 
                     l = new Leaderboard(String.valueOf(rank), name, String.valueOf(level - 1), String.valueOf(points));
                     leaderboardList.add(l);
 
                 }
 
-                CurPlayer player = body.getPayload().getCurPlayer();
-                String name = player.getName();
-                int level = player.getLevel();
-                int points = player.getPoints();
-                int rank = player.getRank();
+                if (count == 0) {
+                    CurPlayer player = body.getPayload().getCurPlayer();
+                    String name = player.getName();
+                    int level = player.getLevel();
+                    double points = player.getPoints();
+                    int rank = player.getRank();
 
-                l = new Leaderboard(String.valueOf(rank), name, String.valueOf(level - 1), String.valueOf(points));
-                leaderboardList.add(l);
+                    l = new Leaderboard(String.valueOf(rank), name, String.valueOf(level - 1), String.valueOf(points));
+                    leaderboardList.add(l);
+                }
                 adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.INVISIBLE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("CurrentPlayer", curPlayer.getName());
+                editor.apply();
             }
 
             @Override

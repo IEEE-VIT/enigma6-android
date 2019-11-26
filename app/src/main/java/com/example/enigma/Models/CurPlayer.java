@@ -3,14 +3,14 @@ package com.example.enigma.Models;
 public class CurPlayer {
 
     private String name;
-    private int points;
+    private double points;
     private int rank;
     private int level;
 
     public CurPlayer() {
     }
 
-    public CurPlayer(String name, int points, int rank, int level) {
+    public CurPlayer(String name, double points, int rank, int level) {
         this.name = name;
         this.points = points;
         this.rank = rank;
@@ -25,11 +25,11 @@ public class CurPlayer {
         this.name = name;
     }
 
-    public int getPoints() {
+    public double getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(double points) {
         this.points = points;
     }
 

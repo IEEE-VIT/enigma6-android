@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -30,6 +31,13 @@
                 android:src="@mipmap/road"
                 app:layout_collapseParallaxMultiplier="0.5" />
 
+            <TextView
+                android:id="@+id/rules_expanded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/rules" />
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/AppBar"
                 android:layout_width="match_parent"
@@ -41,8 +49,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:foregroundGravity="left"
-                    android:src="@mipmap/hamburger"
-                    />
+                    android:src="@mipmap/hamburger" />
+
+                <TextView
+                    android:id="@+id/rules_collapsed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rules"
+                    android:visibility="visible" />
 
             </androidx.appcompat.widget.Toolbar>
 

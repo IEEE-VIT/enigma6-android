@@ -4,22 +4,24 @@ public class User {
 
     private String name;
     private String email;
-    private int points;
+    private double points;
     private int level;
     private boolean[] usedHint;
     private int rank;
+    private boolean isNameDefault;
 
 
     public User() {
     }
 
-    public User(String name, String email, int points, int level, boolean[] usedHint, int rank) {
+    public User(String name, String email, double points, int level, boolean[] usedHint, int rank, boolean isNameDefault) {
         this.name = name;
         this.email = email;
         this.points = points;
         this.level = level;
         this.usedHint = usedHint;
         this.rank = rank;
+        this.isNameDefault = isNameDefault;
     }
 
     public String getName() {
@@ -38,11 +40,11 @@ public class User {
         this.email = email;
     }
 
-    public int getPoints() {
+    public double getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
+    public void setPoints(double points) {
         this.points = points;
     }
 
@@ -68,5 +70,13 @@ public class User {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public boolean isNameDefault() {
+        return isNameDefault;
+    }
+
+    public void setNameDefault(boolean nameDefault) {
+        isNameDefault = nameDefault;
     }
 }

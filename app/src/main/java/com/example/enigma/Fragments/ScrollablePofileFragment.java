@@ -109,7 +109,7 @@ public class ScrollablePofileFragment extends Fragment {
 
             @Override
             public void onFailure(Call<FetchingUserProfile> call, Throwable t) {
-
+                progressBar.setVisibility(hintsUsed.GONE);
             }
         });
     }
