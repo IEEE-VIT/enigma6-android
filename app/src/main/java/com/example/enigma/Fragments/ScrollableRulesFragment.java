@@ -40,29 +40,6 @@ public class ScrollableRulesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_scrollable_rules, container, false);
         initializeViews(rootView);
-
-
-        toolbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-
-                if(verticalOffset == 0)
-                {
-                    TextView rulesExpanded = rootView.findViewById(R.id.rules_expanded);
-                    TextView rulesCollapsed = rootView.findViewById(R.id.rules_collapsed);
-                    rulesExpanded.setVisibility(View.VISIBLE);
-                    rulesCollapsed.setVisibility(View.INVISIBLE);
-                }
-                else if(Math.abs(verticalOffset) >= toolbar.getTotalScrollRange())
-                {
-                    TextView rulesExpanded = rootView.findViewById(R.id.rules_expanded);
-                    TextView rulesCollapsed = rootView.findViewById(R.id.rules_collapsed);
-                    rulesExpanded.setVisibility(View.INVISIBLE);
-                    rulesCollapsed.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
         hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,27 +61,17 @@ public class ScrollableRulesFragment extends Fragment {
     }
 
     private void prepareRulesData() {
-        Rules rule = new Rules("For every correct answer without using hints,you will get x points ");
+        Rules rule = new Rules("Enigma 6 is an online cryptic event where players solve a series of challenging riddles and puzzles to win exciting cash prizes!");
         rulesList.add(rule);
-        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rule = new Rules("The points earned on each question are totally relative to the competition - the sooner you solve a question, the higher your score shall be!");
         rulesList.add(rule);
-        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rule = new Rules("Upon using a hint, a one-time penalty of 15% shall be applied on the points earned from the corresponding question.");
         rulesList.add(rule);
-        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rule = new Rules("Enigma 6 shall end on 8th December, 4:20 PM");
         rulesList.add(rule);
-        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rule = new Rules("Participant with most points will be declared winner");
         rulesList.add(rule);
-        rule = new Rules("For every correct answer without using hints,you will get x points");
-        rulesList.add(rule);
-        rule = new Rules("For every correct answer without using hints,you will get x points");
-        rulesList.add(rule);
-        rule = new Rules("For every correct answer without using hints,you will get x points");
-        rulesList.add(rule);
-        rule = new Rules("For every correct answer without using hints,you will get x points");
-        rulesList.add(rule);
-        rule = new Rules("For every correct answer without using hints,you will get x points");
-        rulesList.add(rule);
-        rule = new Rules("For every correct answer without using hints,you will get x points");
+        rule = new Rules("Any form of malpractice shall be dealt with extreme seriousness. We are constantly trying to enhance the experience and security of the system. Your cooperation is highly appreciated.");
         rulesList.add(rule);
     }
 }

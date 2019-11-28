@@ -23,7 +23,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        tools:listitem="@layout/recycler_view_rules"/>
 
 
     <com.google.android.material.button.MaterialButton
@@ -37,6 +38,7 @@
         android:textSize="16sp"
         android:textStyle="normal"
         app:backgroundTint="@color/majenta"
+        app:elevation="8dp"
         app:fontFamily="@font/saira"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

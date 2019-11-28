@@ -2,15 +2,16 @@ package com.example.enigma.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.enigma.Activities.SetUpActivity;
 import com.example.enigma.Activities.WorkingActivity;
 import com.example.enigma.BuildConfig;
@@ -40,7 +41,11 @@ public class UserProfileFragment extends Fragment {
     private TextView usernameTextView;
     private MaterialButton done;
     private FirebaseAuth auth;
-    private ProgressBar pBar;
+    private LottieAnimationView animationView;
+    private Call<FetchingUserProfile> call2;
+    private Call<RegistrationResponse> call;
+    private Call<ChangeUserName> call1;
+    private ImageView tint;
 
     public UserProfileFragment() {
     }
@@ -58,7 +63,10 @@ public class UserProfileFragment extends Fragment {
                     username = usernameTextView.getText().toString();
                     UserDetails details = new UserDetails(username, auth.getCurrentUser().getEmail());
                     Name name = new Name(username);
-                    pBar.setVisibility(View.VISIBLE);
+                    tint.setVisibility(View.VISIBLE);
+                    animationView.setVisibility(View.VISIBLE);
+                    getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     registerUser(details, name);
                 }
                 else
@@ -79,20 +87,37 @@ public class UserProfileFragment extends Fragment {
         emailTextView = rootView.findViewById(R.id.email_text_edit_set_profile_fragment);
         emailTextView.setText(auth.getCurrentUser().getEmail());
         emailTextView.setEnabled(false);
-        pBar = rootView.findViewById(R.id.profile_progress_bar);
+        animationView = rootView.findViewById(R.id.lottie_animation_set_up_profile);
+        tint = rootView.findViewById(R.id.set_up_profile_tint);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(call!=null)
+            call.cancel();
+        if(call1!=null)
+            call1.cancel();
+        if(call2!=null)
+            call2.cancel();
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        pBar.setVisibility(View.VISIBLE);
+        tint.setVisibility(View.VISIBLE);
+        animationView.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         FetchUserProfile userProfile = retrofit.create(FetchUserProfile.class);
-        Call<FetchingUserProfile> call = userProfile.fetchProfile(auth.getCurrentUser().getUid());
-        call.enqueue(new Callback<FetchingUserProfile>() {
+        call2 = userProfile.fetchProfile(auth.getCurrentUser().getUid());
+        call2.enqueue(new Callback<FetchingUserProfile>() {
             @Override
             public void onResponse(Call<FetchingUserProfile> call, Response<FetchingUserProfile> response) {
                 if(response.body()!=null)
@@ -104,12 +129,24 @@ public class UserProfileFragment extends Fragment {
                             getActivity().finish();
                         }
                     }
-                pBar.setVisibility(View.INVISIBLE);
+                tint.setVisibility(View.INVISIBLE);
+                animationView.setVisibility(View.INVISIBLE);
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
 
                 @Override
                 public void onFailure(Call<FetchingUserProfile> call, Throwable t) {
-                    pBar.setVisibility(View.INVISIBLE);
+                    if(call2.isCanceled())
+                    {
+                        tint.setVisibility(View.INVISIBLE);
+                        animationView.setVisibility(View.INVISIBLE);
+                    }
+                    else
+                    {
+                        tint.setVisibility(View.INVISIBLE);
+                        animationView.setVisibility(View.INVISIBLE);
+                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
                 }
             });
         }
@@ -134,9 +171,8 @@ public class UserProfileFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create());
 
         final Retrofit retrofit = builder.build();
-
         final RegisteringUser user = retrofit.create(RegisteringUser.class);
-        Call<RegistrationResponse> call = user.registerPlayer(auth.getCurrentUser().getUid(), details);
+        call = user.registerPlayer(auth.getCurrentUser().getUid(), details);
         call.enqueue(new Callback<RegistrationResponse>() {
             @Override
             public void onResponse(Call<RegistrationResponse> call, final Response<RegistrationResponse> response) {
@@ -146,27 +182,40 @@ public class UserProfileFragment extends Fragment {
                 {
 
                     final ChangeProfile profile = retrofit.create(ChangeProfile.class);
-                    Call<ChangeUserName> call1 = profile.changeUserName(auth.getCurrentUser().getUid(), username);
+                    call1 = profile.changeUserName(auth.getCurrentUser().getUid(), username);
                     call1.enqueue(new Callback<ChangeUserName>() {
                         @Override
                         public void onResponse(Call<ChangeUserName> call, Response<ChangeUserName> response1) {
                             if(response1.body()!=null) {
                                 if (response1.body().getStatusCode() == 200) {
                                     SetUpActivity.getmSwitchToOtherFragments().goToRulesFragment();
-                                    pBar.setVisibility(View.INVISIBLE);
+                                    tint.setVisibility(View.INVISIBLE);
+                                    animationView.setVisibility(View.INVISIBLE);
+                                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 }
                             }
                             else
                             {
-                                makeSnackbar(done, "Some Error Occured!");
-                                pBar.setVisibility(View.INVISIBLE);
-                                Log.d("Hello", name.getName());
+                                makeSnackbar(done, "Username Already Taken!");
+                                tint.setVisibility(View.INVISIBLE);
+                                animationView.setVisibility(View.INVISIBLE);
+                                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                             }
                         }
 
                         @Override
                         public void onFailure(Call<ChangeUserName> call, Throwable t) {
-                            int c = 10;
+                                if(call1.isCanceled())
+                                {
+                                    tint.setVisibility(View.INVISIBLE);
+                                    animationView.setVisibility(View.INVISIBLE);
+                                }
+                                else
+                                {
+                                    tint.setVisibility(View.INVISIBLE);
+                                    animationView.setVisibility(View.INVISIBLE);
+                                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                }
                         }
                     });
 
@@ -174,14 +223,27 @@ public class UserProfileFragment extends Fragment {
                 else
                 {
                     makeSnackbar(done, response.body().getPayload().getMsg());
-                    pBar.setVisibility(View.INVISIBLE);
+                    tint.setVisibility(View.INVISIBLE);
+                    animationView.setVisibility(View.INVISIBLE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             }
 
             @Override
             public void onFailure(Call<RegistrationResponse> call, Throwable t) {
-                makeSnackbar(done, "Some Error Occured, Please Try later");
-                pBar.setVisibility(View.INVISIBLE);
+                if(call.isCanceled())
+                {
+                    tint.setVisibility(View.INVISIBLE);
+                    animationView.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    makeSnackbar(done, "Some Error Occured, Please Try later");
+                    tint.setVisibility(View.INVISIBLE);
+                    animationView.setVisibility(View.INVISIBLE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                }
             }
         });
     }

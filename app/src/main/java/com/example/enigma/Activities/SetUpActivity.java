@@ -18,8 +18,6 @@ public class SetUpActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
         if(manager.getBackStackEntryCount()==0)
         {
             finish();
@@ -34,27 +32,22 @@ public class SetUpActivity extends AppCompatActivity {
 
         initialize();
 
-        transaction(new LoginFragment());
+        add(new LoginFragment());
 
         mSwitchToOtherFragments = new SwitchToOtherFragments() {
             @Override
-            public void goToLoginFragment() {
-                transaction(new LoginFragment());
-            }
-
-            @Override
             public void goToSignUpFragment() {
-                transaction(new SignupFragment());
+                add(new SignupFragment());
             }
 
             @Override
             public void goToUserProfileFragment() {
-                transaction(new UserProfileFragment());
+                replace(new UserProfileFragment());
             }
 
             @Override
             public void goToRulesFragment() {
-                transaction(new RulesFragment());
+                replace(new RulesFragment());
             }
 
             @Override
@@ -68,13 +61,18 @@ public class SetUpActivity extends AppCompatActivity {
         manager = getSupportFragmentManager();
     }
 
-    private void transaction(Fragment fragment) {
+    private void replace(Fragment fragment) {
         manager.beginTransaction()
                 .replace(R.id.Container, fragment)
-                .addToBackStack(null)
                 .commit();
     }
 
+    private void add(Fragment fragment) {
+        manager.beginTransaction()
+                .add(R.id.Container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
 
     public static SwitchToOtherFragments getmSwitchToOtherFragments() {
         return mSwitchToOtherFragments;

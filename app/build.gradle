@@ -19,8 +19,8 @@ android {
 
         }
 
-        debug{
-            buildConfigField("String", "BASE_URL", '"https://enigma6-backend.herokuapp.com/"')
+        debug {
+            buildConfigField("String", "BASE_URL", '"https://enigma6-backend.herokuapp.com"')
         }
     }
 }
@@ -64,6 +64,14 @@ dependencies {
 
     //httpLoggingInterceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+
+    //Lottie
+    implementation 'com.airbnb.android:lottie:2.8.0'
+
+    //shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+
 
 }
 

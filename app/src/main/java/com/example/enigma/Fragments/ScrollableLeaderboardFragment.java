@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -20,13 +20,10 @@ import com.example.enigma.Models.CurPlayer;
 import com.example.enigma.Models.FetchingLeaderboard;
 import com.example.enigma.Models.Leaderboard;
 import com.example.enigma.R;
-import com.google.android.gms.common.api.Api;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
-import java.util.logging.Level;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
+import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,14 +37,16 @@ public class ScrollableLeaderboardFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private ImageView hamburger;
+    private ImageView tint;
     private FirebaseAuth auth;
-    private ProgressBar progressBar;
     private Leaderboard l;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Leaderboard> leaderboardList = new ArrayList<>();
     private CurPlayer curPlayer;
     private Integer count;
     private SharedPreferences sharedPreferences;
+    private Call<FetchingLeaderboard> call;
+    private ShimmerFrameLayout mShimmerViewContainer;
 
     public ScrollableLeaderboardFragment() {
     }
@@ -68,7 +67,6 @@ public class ScrollableLeaderboardFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        progressBar.setVisibility(View.VISIBLE);
         prepareLeaderboard();
         return rootView;
     }
@@ -79,22 +77,31 @@ public class ScrollableLeaderboardFragment extends Fragment {
         hamburger = rootView.findViewById(R.id.leaderboard_hamburger);
         layoutManager = new LinearLayoutManager(getContext());
         auth = FirebaseAuth.getInstance();
-        progressBar = rootView.findViewById(R.id.scrollable_leaderboard_progress_bar);
         count = 0;
         sharedPreferences = getContext().getSharedPreferences("Current", MODE_PRIVATE);
+        mShimmerViewContainer = rootView.findViewById(R.id.shimmer_view_container);
+        tint = rootView.findViewById(R.id.leaderboard_tint);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        call.cancel();
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
 
-        private void prepareLeaderboard() {
+    private void prepareLeaderboard() {
+        tint.setVisibility(View.VISIBLE);
+        mShimmerViewContainer.startShimmerAnimation();
+        Objects.requireNonNull(getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create());
-
         Retrofit retrofit = builder.build();
         final FetchLeaderBoard leaderBoard = retrofit.create(FetchLeaderBoard.class);
-
-        Call<FetchingLeaderboard> call = leaderBoard.fetchLeaderBoard(auth.getCurrentUser().getUid());
-
+        call = leaderBoard.fetchLeaderBoard(auth.getCurrentUser().getUid());
         call.enqueue(new Callback<FetchingLeaderboard>() {
             @Override
             public void onResponse(Call<FetchingLeaderboard> call, Response<FetchingLeaderboard> response) {
@@ -103,35 +110,32 @@ public class ScrollableLeaderboardFragment extends Fragment {
                 CurPlayer[] leaderboard = body.getPayload().getLeaderBoard();
                 l = new Leaderboard("RANK", "NAME", "QUES", "SCORE");
                 leaderboardList.add(l);
-
                 curPlayer = body.getPayload().getCurPlayer();
-
                 for (CurPlayer player : leaderboard) {
                     String name = player.getName();
                     int level = player.getLevel();
-                    double points = player.getPoints();
+                    int points = (int) (player.getPoints());
                     int rank = player.getRank();
-
                     if (curPlayer.getName().equals(name))
                         count = 1;
-
                     l = new Leaderboard(String.valueOf(rank), name, String.valueOf(level - 1), String.valueOf(points));
                     leaderboardList.add(l);
-
                 }
-
                 if (count == 0) {
                     CurPlayer player = body.getPayload().getCurPlayer();
                     String name = player.getName();
                     int level = player.getLevel();
-                    double points = player.getPoints();
+                    int points = (int) player.getPoints();
                     int rank = player.getRank();
 
                     l = new Leaderboard(String.valueOf(rank), name, String.valueOf(level - 1), String.valueOf(points));
                     leaderboardList.add(l);
                 }
                 adapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.INVISIBLE);
+                mShimmerViewContainer.stopShimmerAnimation();
+                mShimmerViewContainer.setVisibility(View.GONE);
+                tint.setVisibility(View.INVISIBLE);
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("CurrentPlayer", curPlayer.getName());
                 editor.apply();
@@ -139,7 +143,19 @@ public class ScrollableLeaderboardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<FetchingLeaderboard> call, Throwable t) {
-                progressBar.setVisibility(View.INVISIBLE);
+                if(call.isCanceled())
+                {
+                    mShimmerViewContainer.stopShimmerAnimation();
+                    mShimmerViewContainer.setVisibility(View.GONE);
+                    tint.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    mShimmerViewContainer.stopShimmerAnimation();
+                    mShimmerViewContainer.setVisibility(View.GONE);
+                    tint.setVisibility(View.INVISIBLE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                }
             }
         });
     }

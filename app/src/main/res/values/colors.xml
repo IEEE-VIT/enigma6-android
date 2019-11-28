@@ -8,8 +8,11 @@
     <color name="yellow">#F3DF3B</color>
     <color name="blue">#cef6f9</color>
     <color name="grey">#262626</color>
+    <color name="darkGrey">#303030</color>
     <color name="green">#61f793</color>
     <color name="lightGrey">#3a3a3a</color>
     <color name="majenta">#bb1582</color>
     <color name="purple">#210dd4</color>
+    <color name="background">#dddddd</color>
+    <color name="snow">#EEE9E9</color>
 </resources>

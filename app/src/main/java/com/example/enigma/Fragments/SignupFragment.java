@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.enigma.Activities.SetUpActivity;
 import com.example.enigma.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,7 +37,8 @@ public class SignupFragment extends Fragment {
     private FirebaseAuth auth;
     private TextView login;
     private FirebaseUser user;
-    private ProgressBar pBar;
+    private ImageView tint;
+    private LottieAnimationView animationView;
 
     public SignupFragment() {
     }
@@ -44,16 +48,13 @@ public class SignupFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
-
         initialize(rootView);
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SetUpActivity.getmSwitchToOtherFragments().goToLoginFragment();
+                SetUpActivity.getmSwitchToOtherFragments().pop();
             }
         });
-
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +63,6 @@ public class SignupFragment extends Fragment {
                     {
                         emailText = email.getText().toString();
                         passwordText = password.getText().toString();
-                        pBar.setVisibility(View.VISIBLE);
                         signUpProcess(emailText, passwordText);
                     }
                     else
@@ -88,10 +88,14 @@ public class SignupFragment extends Fragment {
         signUpButton = rootView.findViewById(R.id.sign_up_button_sign_up_fragment);
         login = rootView.findViewById(R.id.login_text_view_sign_up_fragment);
         auth = FirebaseAuth.getInstance();
-        pBar = rootView.findViewById(R.id.sign_up_progress_bar);
+        tint = rootView.findViewById(R.id.sign_up_tint);
+        animationView = rootView.findViewById(R.id.lottie_animation_signup);
     }
 
     private void signUpProcess(final String email, final String password) {
+        animationView.setVisibility(View.VISIBLE);
+        animationView.setSpeed(1);
+        tint.setVisibility(View.VISIBLE);
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -105,6 +109,8 @@ public class SignupFragment extends Fragment {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful())
                                             {
+                                                tint.setVisibility(View.INVISIBLE);
+                                                animationView.setVisibility(View.INVISIBLE);
                                                 Snackbar.make(signUpButton,"Verification mail sent check your mail",Snackbar.LENGTH_SHORT)
                                                         .show();
                                                 SetUpActivity.getmSwitchToOtherFragments().pop();
@@ -112,6 +118,8 @@ public class SignupFragment extends Fragment {
                                             }
                                             else
                                             {
+                                                tint.setVisibility(View.INVISIBLE);
+                                                animationView.setVisibility(View.INVISIBLE);
                                                 Snackbar.make(signUpButton,"Some Error occured Try later",Snackbar.LENGTH_SHORT)
                                                         .show();
                                             }
@@ -121,15 +129,17 @@ public class SignupFragment extends Fragment {
                         }
                         else if(password.length()<6)
                         {
+                            tint.setVisibility(View.INVISIBLE);
+                            animationView.setVisibility(View.INVISIBLE);
                             Snackbar.make(signUpButton,"Please enter password of atleast 6 characters",Snackbar.LENGTH_SHORT)
                                     .show();
-                            pBar.setVisibility(View.INVISIBLE);
                         }
                         else
                         {
+                            tint.setVisibility(View.INVISIBLE);
+                            animationView.setVisibility(View.INVISIBLE);
                             Snackbar.make(signUpButton,"Some error occured.",Snackbar.LENGTH_SHORT)
                                     .show();
-                            pBar.setVisibility(View.INVISIBLE);
                         }
                     }
                 });
