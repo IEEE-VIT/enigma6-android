@@ -22,13 +22,16 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nvView"
+        android:theme="@style/NavTheme"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/lightGrey"
+        android:background="@color/grey"
         android:paddingTop="20dp"
+        app:headerLayout="@layout/navigation_drawer_header"
         android:textAlignment="center"
         android:textDirection="ltr"
+        app:itemIconTint="@color/white"
         app:itemTextAppearance="@style/ItemFont"
         app:itemTextColor="@color/white"
         app:menu="@menu/drawer" />

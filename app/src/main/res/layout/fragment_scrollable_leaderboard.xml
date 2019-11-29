@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom|center"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:duration="800"
             android:orientation="vertical">
 
@@ -26,15 +26,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <include layout="@layout/shimmer_effect_leaderboard_list" />
+
                 <include layout="@layout/shimmer_effect_leaderboard_list" />
+
                 <include layout="@layout/shimmer_effect_leaderboard_list" />
+
                 <include layout="@layout/shimmer_effect_leaderboard_list" />
+
                 <include layout="@layout/shimmer_effect_leaderboard_list" />
+
                 <include layout="@layout/shimmer_effect_leaderboard_list" />
+
                 <include layout="@layout/shimmer_effect_leaderboard_list" />
+
                 <include layout="@layout/shimmer_effect_leaderboard_list" />
+
                 <include layout="@layout/shimmer_effect_leaderboard_list" />
+
                 <include layout="@layout/shimmer_effect_leaderboard_list" />
             </LinearLayout>
 

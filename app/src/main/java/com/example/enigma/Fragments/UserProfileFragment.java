@@ -69,10 +69,6 @@ public class UserProfileFragment extends Fragment {
                             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     registerUser(details, name);
                 }
-                else
-                {
-                    makeSnackbar(done, "Please enter all the fields");
-                }
             }
         });
         return rootView;
@@ -114,7 +110,7 @@ public class UserProfileFragment extends Fragment {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create());
-        Retrofit retrofit = builder.build();
+        final Retrofit retrofit = builder.build();
         FetchUserProfile userProfile = retrofit.create(FetchUserProfile.class);
         call2 = userProfile.fetchProfile(auth.getCurrentUser().getUid());
         call2.enqueue(new Callback<FetchingUserProfile>() {
@@ -124,9 +120,27 @@ public class UserProfileFragment extends Fragment {
                 {
                     if(response.body().getPayload().getUser().getName()!=null)
                         {
-                            Intent intent = new Intent(getActivity(), WorkingActivity.class);
-                            startActivity(intent);
-                            getActivity().finish();
+                            final ChangeProfile profile = retrofit.create(ChangeProfile.class);
+                            call1 = profile.changeUserName(auth.getCurrentUser().getUid(), username);
+                            call1.enqueue(new Callback<ChangeUserName>() {
+                                @Override
+                                public void onResponse(Call<ChangeUserName> call, Response<ChangeUserName> response1) {
+                                    if(response1.body()!=null) {
+                                        if (!response1.body().getPayload().getUser().isNameDefault()) {
+                                            Intent intent = new Intent(getActivity(), WorkingActivity.class);
+                                            startActivity(intent);
+                                            getActivity().finish();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ChangeUserName> call, Throwable t) {
+                                    {
+
+                                    }
+                                }
+                            });
                         }
                     }
                 tint.setVisibility(View.INVISIBLE);
@@ -157,10 +171,16 @@ public class UserProfileFragment extends Fragment {
             && (usernameTextView.getText()!=null && usernameTextView.getText().length()>0)))
 
         {
-            return true;
+            if(usernameTextView.getText().toString().length()>=5 && !usernameTextView.getText().toString().contains(" "))
+                return true;
+            else {
+                makeSnackbar(done, "No spaces allowed and should be more than 5 characters");
+                return false;
+            }
         }
         else
         {
+            makeSnackbar(done, "Enter all fields");
             return false;
         }
     }

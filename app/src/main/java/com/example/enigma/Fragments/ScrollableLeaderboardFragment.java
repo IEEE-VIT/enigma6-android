@@ -56,19 +56,22 @@ public class ScrollableLeaderboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_scrollable_leaderboard, container, false);
         initializeViews(rootView);
-
-
         hamburger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 WorkingActivity.getOpenDrawerFragments().OpenDrawer();
             }
         });
-
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         prepareLeaderboard();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        WorkingActivity.getOpenBottomSheets().setChecked(2);
     }
 
     private void initializeViews(View rootView) {

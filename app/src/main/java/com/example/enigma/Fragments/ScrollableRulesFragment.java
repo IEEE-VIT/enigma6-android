@@ -34,6 +34,11 @@ public class ScrollableRulesFragment extends Fragment {
     public ScrollableRulesFragment() {
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        WorkingActivity.getOpenBottomSheets().setChecked(0);
+    }
 
     @Nullable
     @Override

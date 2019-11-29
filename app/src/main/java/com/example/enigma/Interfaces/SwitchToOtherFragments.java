@@ -5,5 +5,6 @@ public interface SwitchToOtherFragments {
     void goToUserProfileFragment();
     void goToRulesFragment();
     void pop();
+    void openForgotPasswordBottomSheet();
 }
 

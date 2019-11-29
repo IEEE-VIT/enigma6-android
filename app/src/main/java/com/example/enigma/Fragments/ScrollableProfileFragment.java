@@ -42,6 +42,7 @@ public class ScrollableProfileFragment extends Fragment {
     private LottieAnimationView animationView;
     private Call<FetchingUserProfile> call;
     private ImageView tint;
+    private ImageView editUsernameIcon;
 
     public ScrollableProfileFragment() {
     }
@@ -58,6 +59,13 @@ public class ScrollableProfileFragment extends Fragment {
                 WorkingActivity.getOpenDrawerFragments().OpenDrawer();
             }
         });
+
+        editUsernameIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WorkingActivity.getOpenBottomSheets().OpenUserNameBottomSheet();
+            }
+        });
         return rootView;
     }
 
@@ -72,6 +80,13 @@ public class ScrollableProfileFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         animationView = rootView.findViewById(R.id.lottie_animation_profile);
         tint = rootView.findViewById(R.id.profile_tint);
+        editUsernameIcon = rootView.findViewById(R.id.edit_username_icon);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        WorkingActivity.getOpenBottomSheets().setChecked(3);
     }
 
     @Override

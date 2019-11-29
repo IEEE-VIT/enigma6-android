@@ -2,28 +2,63 @@
 
     <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-<group android:checkableBehavior="single">
+<group
+    android:id="@+id/nav_group1"
+    android:checkableBehavior="single">
+
     <item
         android:id="@+id/item_rules"
         android:icon="@mipmap/rule"
-        android:title="@string/rules" />
+        android:title="@string/rules1" />
     <item
         android:id="@+id/item_game"
         android:icon="@mipmap/game"
+        android:checked="true"
         android:title="@string/game" />
     <item
         android:id="@+id/item_leaderboard"
         android:icon="@mipmap/leaderboard"
-        android:title="@string/leaderboard" />
+        android:title="@string/leaderboard1" />
     <item
         android:id="@+id/item_profile"
         android:icon="@mipmap/profile"
-        android:title="@string/profile" />
+        android:title="@string/profile1" />
     <item
         android:id="@+id/item_logout"
         android:icon="@mipmap/logout"
-        android:title="@string/logout" />
-
+        android:title="@string/logout1" />
 </group>
 
-    </menu>
+    <group
+    android:id="@+id/nav_group2"
+    android:checkableBehavior="single">
+
+        <item android:title="Catch Us At"/>
+
+        <item
+            android:id="@+id/item_facebook"
+            android:icon="@mipmap/facebook"
+            android:title="@string/facebook" />
+
+        <item
+            android:id="@+id/item_instagram"
+            android:icon="@mipmap/instagram"
+            android:title="@string/instagram" />
+
+        <item
+            android:id="@+id/item_twitter"
+            android:icon="@mipmap/twitter"
+            android:title="@string/twitter" />
+
+        <item
+            android:id="@+id/item_github"
+            android:icon="@mipmap/github"
+            android:title="@string/github" />
+
+        <item
+            android:id="@+id/item_linkedln"
+            android:icon="@mipmap/linkedin"
+            android:title="@string/linkedln" />
+    </group>
+
+</menu>

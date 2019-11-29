@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
+
+import com.example.enigma.Fragments.ForgotPasswordBottomSheet;
 import com.example.enigma.Fragments.LoginFragment;
 import com.example.enigma.Fragments.RulesFragment;
 import com.example.enigma.Interfaces.SwitchToOtherFragments;
@@ -15,9 +17,11 @@ public class SetUpActivity extends AppCompatActivity {
 
     static SwitchToOtherFragments mSwitchToOtherFragments;
     private FragmentManager manager;
+    private ForgotPasswordBottomSheet forgotPasswordBottomSheet = new ForgotPasswordBottomSheet();
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         if(manager.getBackStackEntryCount()==0)
         {
             finish();
@@ -53,6 +57,11 @@ public class SetUpActivity extends AppCompatActivity {
             @Override
             public void pop() {
                 manager.popBackStack();
+            }
+
+            @Override
+            public void openForgotPasswordBottomSheet() {
+                forgotPasswordBottomSheet.show(getSupportFragmentManager(), forgotPasswordBottomSheet.getTag());
             }
         };
     }

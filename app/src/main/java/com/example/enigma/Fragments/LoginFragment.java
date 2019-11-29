@@ -188,34 +188,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void changePassword() {
-        animationView.setVisibility(View.VISIBLE);
-        tint.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        if (email.getText() != null && email.getText().length() > 0) {
-            auth.sendPasswordResetEmail(email.getText().toString())
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                makeSnackbar("Mail sent for password", forgotPassword);
-                                animationView.setVisibility(View.INVISIBLE);
-                                tint.setVisibility(View.INVISIBLE);
-                                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                            } else {
-                                makeSnackbar("Wrong email", forgotPassword);
-                                animationView.setVisibility(View.INVISIBLE);
-                                tint.setVisibility(View.INVISIBLE);
-                                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                            }
-                        }
-                    });
-        } else {
-            makeSnackbar("Please enter the email field for this feature", forgotPassword);
-            animationView.setVisibility(View.INVISIBLE);
-            tint.setVisibility(View.INVISIBLE);
-            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        }
+        SetUpActivity.getmSwitchToOtherFragments().openForgotPasswordBottomSheet();
     }
 
     private void googleLoginProcess() {

@@ -3,6 +3,7 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/login_scroll_view"
@@ -45,8 +46,8 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_google_button"
-        android:layout_width="279dp"
-        android:layout_height="48dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
         android:layout_marginTop="50dp"
         android:gravity="center|start"
         android:paddingLeft="10dp"
@@ -56,9 +57,8 @@
         android:textStyle="normal"
         app:backgroundTint="@color/grey"
         app:fontFamily="@font/saira"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
         app:layout_constraintTop_toBottomOf="@+id/hoodie_login_image" />
 
 
@@ -66,7 +66,7 @@
         android:id="@+id/or_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/saira"
         android:text="@string/or"
@@ -83,8 +83,7 @@
         android:layout_width="279dp"
         android:layout_height="71dp"
         android:clickable="true"
-        android:focusable="auto"
-        android:focusableInTouchMode="false"
+        android:focusableInTouchMode="true"
         android:hint="@string/email"
         android:textColorHint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,11 +94,13 @@
             android:id="@+id/email_text_edit_login_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:paddingLeft="20dp"
             android:paddingRight="5dp"
             android:singleLine="true"
             android:textColorLink="@color/white"
-            android:textCursorDrawable="@color/white"
             android:textStyle="normal"
             app:fontFamily="@font/saira" />
 
@@ -110,7 +111,7 @@
         android:id="@+id/textInputLayout3"
         android:layout_width="279dp"
         android:layout_height="71dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="auto"
         android:focusableInTouchMode="false"
@@ -127,10 +128,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:cursorVisible="true"
+            android:focusableInTouchMode="true"
             android:inputType="textPassword"
             android:paddingLeft="20dp"
             android:paddingRight="5dp"
-            android:textCursorDrawable="@color/white"
             android:textStyle="normal"
             app:backgroundTint="@color/white"
             app:fontFamily="@font/saira" />
@@ -145,7 +146,7 @@
         android:fontFamily="@font/saira"
         android:text="@string/forgot_password"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
@@ -156,6 +157,7 @@
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/login"
         android:textColor="@color/black"
@@ -163,24 +165,25 @@
         android:textStyle="normal"
         app:backgroundTint="@color/blue"
         app:fontFamily="@font/saira"
+        app:layout_constraintBottom_toTopOf="@+id/no_account_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgot_password_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/forgot_password_text_view"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/no_account_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/no_account"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="normal"
         app:fontFamily="@font/saira"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/login_button_login_fragment" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout2" />
 
     <TextView
         android:id="@+id/sign_up_text_view_login_fragment"
