@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/hint_container"
     android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:layout_gravity="bottom"
     android:background="@drawable/background_bottom_sheet"
     android:orientation="vertical">
 
@@ -60,12 +63,10 @@
         android:layout_marginTop="48dp"
         android:layout_marginEnd="120dp"
         android:layout_marginBottom="32dp"
+        tools:visibility="gone"
         android:elevation="8dp"
         android:gravity="center"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
+        android:shadowRadius="8"
         android:text="OKAY"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -99,16 +100,13 @@
         android:id="@+id/NO"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="80dp"
         android:layout_marginBottom="32dp"
         android:elevation="8dp"
         android:gravity="center"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
+        android:shadowRadius="8"
         android:text="NO"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -122,22 +120,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ok"
         app:layout_constraintTop_toBottomOf="@+id/want_hint"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:visibility="visible" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/Yes"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:elevation="8dp"
         android:foregroundGravity="center"
         android:gravity="center"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
+        android:shadowRadius="8"
         android:text="YES"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -150,7 +146,8 @@
         app:iconTint="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ok"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

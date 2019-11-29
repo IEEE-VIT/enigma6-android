@@ -1,5 +1,6 @@
 package com.example.enigma.Fragments;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.enigma.Activities.WorkingActivity;
@@ -93,6 +95,10 @@ public class HintBottomSheet extends BottomSheetDialogFragment {
         okButton = rootView.findViewById(R.id.ok);
         animationView = rootView.findViewById(R.id.hint_lottie_animation);
         sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        LayoutTransition transition = new LayoutTransition();
+        transition.setAnimateParentHierarchy(false);
+        ConstraintLayout layout = rootView.findViewById(R.id.hint_container);
+        layout.setLayoutTransition(transition);
     }
 
     private void getHint() {
@@ -169,6 +175,7 @@ public class HintBottomSheet extends BottomSheetDialogFragment {
                     getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             });
+
     }
 
     private void ckeckState() {

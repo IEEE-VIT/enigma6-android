@@ -30,14 +30,13 @@
         tools:listitem="@layout/recycler_view_rules" />
 
     <com.google.android.material.button.MaterialButton
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:id="@+id/fragment_rules_material_button_play"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="8dp"
         android:gravity="center"
-        app:strokeColor="@color/majenta"
-        app:strokeWidth="2dp"
+        android:shadowRadius="8"
         android:text="I accept the challenge"
         android:textColor="@color/majenta"
         android:textSize="16sp"
@@ -46,7 +45,9 @@
         app:fontFamily="@font/saira"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/majenta"
+        app:strokeWidth="2dp" />
 
     <TextView
         android:id="@+id/textView3"
