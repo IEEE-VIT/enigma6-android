@@ -60,7 +60,8 @@ public class SignupFragment extends Fragment {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (email.getText() != null && password.getText() != null && confirmPassword.getText() != null) {
+                if (email.getText() != null && email.getText().length()>0 && password.getText() != null && password.getText().length()>0
+                        &&confirmPassword.getText() != null && confirmPassword.getText().length()>0) {
                     if(password.getText().toString().matches(confirmPassword.getText().toString()))
                     {
                         emailText = email.getText().toString();

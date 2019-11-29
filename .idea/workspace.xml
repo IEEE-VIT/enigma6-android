@@ -21,20 +21,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/HintBottomSheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/HintBottomSheet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_edit_name.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_edit_name.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_forgot_password.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_forgot_password.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_hint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_hint.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_logout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_logout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_game.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_game.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_rules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_rules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_signup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_signup.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_profile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/navigation_drawer_header.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/navigation_drawer_header.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/SignupFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/SignupFragment.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -94,16 +81,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="383">
               <caret line="66" column="12" selection-start-line="66" selection-start-column="12" selection-end-line="66" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_edit_name.xml">
-          <provider editor-type-id="android-designer2" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="58" selection-start-line="8" selection-start-column="58" selection-end-line="8" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -173,14 +150,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/HintBottomSheet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
+            <state relative-caret-position="1177">
               <caret line="177" selection-start-line="177" selection-end-line="177" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/SignupFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="63" column="99" selection-start-line="63" selection-start-column="99" selection-end-line="63" selection-end-column="99" />
             </state>
           </provider>
         </entry>
@@ -245,7 +231,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Interfaces/SwitchToOtherFragments.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Activities/SetUpActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/LoginFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/SignupFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/UserProfileFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_launching.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_scrollable_leaderboard.xml" />
@@ -279,6 +264,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/navigation_drawer_header.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/bottom_sheet_hint.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/HintBottomSheet.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/SignupFragment.java" />
       </list>
     </option>
   </component>
@@ -354,7 +340,7 @@
               <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="example" type="462c0819:PsiDirectoryNode" />
               <item name="enigma" type="462c0819:PsiDirectoryNode" />
-              <item name="Interfaces" type="462c0819:PsiDirectoryNode" />
+              <item name="Fragments" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Enigma Android" type="1abcf292:AndroidViewProjectNode" />
@@ -554,7 +540,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
       <window_info id="Captures" order="0" sideWeight="0.059872612" side_tool="true" weight="0.27181688" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.9068441" visible="true" weight="0.27181688" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.9068441" visible="true" weight="0.27181688" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" sideWeight="0.12849163" side_tool="true" weight="0.27181688" />
       <window_info id="Build Variants" order="4" sideWeight="0.062420383" side_tool="true" weight="0.27181688" />
@@ -569,7 +555,7 @@
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50143063" side_tool="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Version Control" order="6" weight="0.32771084" />
-      <window_info active="true" anchor="bottom" id="Build" order="7" sideWeight="0.4985694" visible="true" weight="0.31325302" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.4985694" weight="0.31325302" />
       <window_info anchor="bottom" id="Android Profiler" order="8" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32738853" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
@@ -683,17 +669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="565">
           <caret line="133" column="4" selection-start-line="133" selection-start-column="4" selection-end-line="141" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/SignupFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="132" column="122" selection-start-line="132" selection-start-column="122" selection-end-line="132" selection-end-column="122" />
-          <folding>
-            <element signature="e#2123#3117#0" expanded="true" />
-            <element signature="e#3116#3117#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1040,11 +1015,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/HintBottomSheet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
+        <state relative-caret-position="1177">
           <caret line="177" selection-start-line="177" selection-end-line="177" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/enigma/Fragments/SignupFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="63" column="99" selection-start-line="63" selection-start-column="99" selection-end-line="63" selection-end-column="99" />
         </state>
       </provider>
     </entry>
