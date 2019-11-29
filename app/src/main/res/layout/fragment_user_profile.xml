@@ -23,7 +23,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/hoodie_3" />
+        app:srcCompat="@drawable/hoodie_3" />
 
     <TextView
         android:id="@+id/set_up_your_profile_text_view"

@@ -14,31 +14,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/road" />
+        app:srcCompat="@drawable/road" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_rules"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:foregroundGravity="top"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_rules_material_button_play"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7"
-        tools:listitem="@layout/recycler_view_rules"/>
-
+        tools:listitem="@layout/recycler_view_rules" />
 
     <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:id="@+id/fragment_rules_material_button_play"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:elevation="8dp"
         android:gravity="center"
-        android:text="@string/play"
-        android:textColor="@color/white"
+        app:strokeColor="@color/majenta"
+        app:strokeWidth="2dp"
+        android:text="I accept the challenge"
+        android:textColor="@color/majenta"
         android:textSize="16sp"
         android:textStyle="normal"
-        app:backgroundTint="@color/majenta"
         app:elevation="8dp"
         app:fontFamily="@font/saira"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView7"
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView7" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

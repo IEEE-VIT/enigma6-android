@@ -1,5 +1,6 @@
 package com.example.enigma.Fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,13 +30,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChangeUsernameBottomSheetFragment extends BottomSheetDialogFragment {
 
+    int flag;
+
     public ChangeUsernameBottomSheetFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        flag = 0;
         View rootView = inflater.inflate(R.layout.bottom_sheet_edit_name, container, false);
         final EditText username = rootView.findViewById(R.id.username_text_edit_bottom_sheet);
         final LottieAnimationView animationView = rootView.findViewById(R.id.edit_name_lottie_animation);
@@ -68,9 +71,11 @@ public class ChangeUsernameBottomSheetFragment extends BottomSheetDialogFragment
                                         Toast.makeText(getContext(), "Username Changed!", Toast.LENGTH_SHORT).show();
                                         username.setEnabled(true);
                                         username.setText("");
+                                        flag = 1;
                                         WorkingActivity.getOpenBottomSheets().CloseUserNameBottomSheet();
                                         animationView.setVisibility(View.GONE);
                                         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
                                     }
                                 } else {
                                     animationView.setVisibility(View.GONE);
@@ -78,6 +83,11 @@ public class ChangeUsernameBottomSheetFragment extends BottomSheetDialogFragment
                                     username.setEnabled(true);
                                     username.setText("");
                                     getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                }
+
+                                if(flag == 1)
+                                {
+
                                 }
                             }
 
@@ -104,5 +114,11 @@ public class ChangeUsernameBottomSheetFragment extends BottomSheetDialogFragment
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        WorkingActivity.getUpdateUsernameInterface().refresh();
     }
 }

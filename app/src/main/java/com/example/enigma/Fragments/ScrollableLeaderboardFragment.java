@@ -1,10 +1,14 @@
 package com.example.enigma.Fragments;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
@@ -21,6 +25,8 @@ import com.example.enigma.Models.FetchingLeaderboard;
 import com.example.enigma.Models.Leaderboard;
 import com.example.enigma.R;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -47,6 +53,7 @@ public class ScrollableLeaderboardFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private Call<FetchingLeaderboard> call;
     private ShimmerFrameLayout mShimmerViewContainer;
+    private Snackbar snackbar;
 
     public ScrollableLeaderboardFragment() {
     }
@@ -89,77 +96,91 @@ public class ScrollableLeaderboardFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        call.cancel();
+        if(call!=null)
+            call.cancel();
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
 
+    public boolean checkInternetConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if ((connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     private void prepareLeaderboard() {
-        tint.setVisibility(View.VISIBLE);
-        mShimmerViewContainer.startShimmerAnimation();
-        Objects.requireNonNull(getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+        if (checkInternetConnection()) {
+            WorkingActivity.getOpenBottomSheets().snackBarInternetDismiss();
+            tint.setVisibility(View.VISIBLE);
+            mShimmerViewContainer.startShimmerAnimation();
+            Objects.requireNonNull(getActivity()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                     WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create());
-        Retrofit retrofit = builder.build();
-        final FetchLeaderBoard leaderBoard = retrofit.create(FetchLeaderBoard.class);
-        call = leaderBoard.fetchLeaderBoard(auth.getCurrentUser().getUid());
-        call.enqueue(new Callback<FetchingLeaderboard>() {
-            @Override
-            public void onResponse(Call<FetchingLeaderboard> call, Response<FetchingLeaderboard> response) {
-                count=0;
-                FetchingLeaderboard body = response.body();
-                CurPlayer[] leaderboard = body.getPayload().getLeaderBoard();
-                l = new Leaderboard("RANK", "NAME", "QUES", "SCORE");
-                leaderboardList.add(l);
-                curPlayer = body.getPayload().getCurPlayer();
-                for (CurPlayer player : leaderboard) {
-                    String name = player.getName();
-                    int level = player.getLevel();
-                    int points = (int) (player.getPoints());
-                    int rank = player.getRank();
-                    if (curPlayer.getName().equals(name))
-                        count = 1;
-                    l = new Leaderboard(String.valueOf(rank), name, String.valueOf(level - 1), String.valueOf(points));
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl(BuildConfig.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+            final FetchLeaderBoard leaderBoard = retrofit.create(FetchLeaderBoard.class);
+            call = leaderBoard.fetchLeaderBoard(auth.getCurrentUser().getUid());
+            call.enqueue(new Callback<FetchingLeaderboard>() {
+                @Override
+                public void onResponse(Call<FetchingLeaderboard> call, Response<FetchingLeaderboard> response) {
+                    count = 0;
+                    FetchingLeaderboard body = response.body();
+                    CurPlayer[] leaderboard = body.getPayload().getLeaderBoard();
+                    l = new Leaderboard("RANK", "NAME", "QUES", "SCORE");
                     leaderboardList.add(l);
-                }
-                if (count == 0) {
-                    CurPlayer player = body.getPayload().getCurPlayer();
-                    String name = player.getName();
-                    int level = player.getLevel();
-                    int points = (int) player.getPoints();
-                    int rank = player.getRank();
+                    curPlayer = body.getPayload().getCurPlayer();
+                    for (CurPlayer player : leaderboard) {
+                        String name = player.getName();
+                        int level = player.getLevel();
+                        int points = (int) (player.getPoints());
+                        int rank = player.getRank();
+                        if (curPlayer.getName().equals(name))
+                            count = 1;
+                        l = new Leaderboard(String.valueOf(rank), name, String.valueOf(level - 1), String.valueOf(points));
+                        leaderboardList.add(l);
+                    }
+                    if (count == 0) {
+                        CurPlayer player = body.getPayload().getCurPlayer();
+                        String name = player.getName();
+                        int level = player.getLevel();
+                        int points = (int) player.getPoints();
+                        int rank = player.getRank();
 
-                    l = new Leaderboard(String.valueOf(rank), name, String.valueOf(level - 1), String.valueOf(points));
-                    leaderboardList.add(l);
-                }
-                adapter.notifyDataSetChanged();
-                mShimmerViewContainer.stopShimmerAnimation();
-                mShimmerViewContainer.setVisibility(View.GONE);
-                tint.setVisibility(View.INVISIBLE);
-                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("CurrentPlayer", curPlayer.getName());
-                editor.apply();
-            }
-
-            @Override
-            public void onFailure(Call<FetchingLeaderboard> call, Throwable t) {
-                if(call.isCanceled())
-                {
-                    mShimmerViewContainer.stopShimmerAnimation();
-                    mShimmerViewContainer.setVisibility(View.GONE);
-                    tint.setVisibility(View.INVISIBLE);
-                }
-                else
-                {
+                        l = new Leaderboard(String.valueOf(rank), name, String.valueOf(level - 1), String.valueOf(points));
+                        leaderboardList.add(l);
+                    }
+                    adapter.notifyDataSetChanged();
                     mShimmerViewContainer.stopShimmerAnimation();
                     mShimmerViewContainer.setVisibility(View.GONE);
                     tint.setVisibility(View.INVISIBLE);
                     getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("CurrentPlayer", curPlayer.getName());
+                    editor.apply();
                 }
-            }
-        });
+
+                @Override
+                public void onFailure(Call<FetchingLeaderboard> call, Throwable t) {
+                    if (call.isCanceled()) {
+                        mShimmerViewContainer.stopShimmerAnimation();
+                        mShimmerViewContainer.setVisibility(View.GONE);
+                        tint.setVisibility(View.INVISIBLE);
+                    } else {
+                        mShimmerViewContainer.stopShimmerAnimation();
+                        mShimmerViewContainer.setVisibility(View.GONE);
+                        tint.setVisibility(View.INVISIBLE);
+                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
+                }
+            });
+        } else {
+            WorkingActivity.getOpenBottomSheets().snackBarInternetShow();
+        }
     }
 }

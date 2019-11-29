@@ -8,5 +8,6 @@ public interface WorkingActivityBottomSheets {
     void OpenLogoutBottomSheet();
     void CloseLogoutBottomSheet();
     void setChecked(int i);
-
+    void snackBarInternetShow();
+    void snackBarInternetDismiss();
 }

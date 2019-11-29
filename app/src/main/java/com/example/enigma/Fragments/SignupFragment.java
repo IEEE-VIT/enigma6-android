@@ -1,5 +1,8 @@
 package com.example.enigma.Fragments;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +49,6 @@ public class SignupFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_signup, container, false);
         initialize(rootView);
         login.setOnClickListener(new View.OnClickListener() {
@@ -92,56 +94,65 @@ public class SignupFragment extends Fragment {
         animationView = rootView.findViewById(R.id.lottie_animation_signup);
     }
 
+    public boolean checkInternetConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if ((connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private void signUpProcess(final String email, final String password) {
-        animationView.setVisibility(View.VISIBLE);
-        animationView.setSpeed(1);
-        tint.setVisibility(View.VISIBLE);
-        auth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        user = auth.getCurrentUser();
-                        if(task.isSuccessful())
-                        {
-                            user.sendEmailVerification()
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful())
-                                            {
-                                                tint.setVisibility(View.INVISIBLE);
-                                                animationView.setVisibility(View.INVISIBLE);
-                                                Snackbar.make(signUpButton,"Verification mail sent check your mail",Snackbar.LENGTH_SHORT)
-                                                        .show();
-                                                SetUpActivity.getmSwitchToOtherFragments().pop();
+        if (checkInternetConnection()) {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetDismiss();
+            animationView.setVisibility(View.VISIBLE);
+            animationView.setSpeed(1);
+            tint.setVisibility(View.VISIBLE);
+            auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            user = auth.getCurrentUser();
+                            if (task.isSuccessful()) {
+                                user.sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    tint.setVisibility(View.INVISIBLE);
+                                                    animationView.setVisibility(View.INVISIBLE);
+                                                    Snackbar.make(signUpButton, "Verification mail sent check your mail", Snackbar.LENGTH_SHORT)
+                                                            .show();
+                                                    SetUpActivity.getmSwitchToOtherFragments().pop();
+
+                                                } else {
+                                                    tint.setVisibility(View.INVISIBLE);
+                                                    animationView.setVisibility(View.INVISIBLE);
+                                                    Snackbar.make(signUpButton, "User already Registered with same details", Snackbar.LENGTH_SHORT)
+                                                            .show();
+                                                }
 
                                             }
-                                            else
-                                            {
-                                                tint.setVisibility(View.INVISIBLE);
-                                                animationView.setVisibility(View.INVISIBLE);
-                                                Snackbar.make(signUpButton,"Some Error occured Try later",Snackbar.LENGTH_SHORT)
-                                                        .show();
-                                            }
-
-                                        }
-                                    });
+                                        });
+                            } else if (password.length() < 6) {
+                                tint.setVisibility(View.INVISIBLE);
+                                animationView.setVisibility(View.INVISIBLE);
+                                Snackbar.make(signUpButton, "Please enter password of atleast 6 characters", Snackbar.LENGTH_SHORT)
+                                        .show();
+                            } else {
+                                tint.setVisibility(View.INVISIBLE);
+                                animationView.setVisibility(View.INVISIBLE);
+                                Snackbar.make(signUpButton, "Some error occured.", Snackbar.LENGTH_SHORT)
+                                        .show();
+                            }
                         }
-                        else if(password.length()<6)
-                        {
-                            tint.setVisibility(View.INVISIBLE);
-                            animationView.setVisibility(View.INVISIBLE);
-                            Snackbar.make(signUpButton,"Please enter password of atleast 6 characters",Snackbar.LENGTH_SHORT)
-                                    .show();
-                        }
-                        else
-                        {
-                            tint.setVisibility(View.INVISIBLE);
-                            animationView.setVisibility(View.INVISIBLE);
-                            Snackbar.make(signUpButton,"Some error occured.",Snackbar.LENGTH_SHORT)
-                                    .show();
-                        }
-                    }
-                });
+                    });
+        }
+        else
+        {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetShow();
+        }
     }
 }

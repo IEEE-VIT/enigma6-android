@@ -1,6 +1,9 @@
 package com.example.enigma.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,10 +66,6 @@ public class UserProfileFragment extends Fragment {
                     username = usernameTextView.getText().toString();
                     UserDetails details = new UserDetails(username, auth.getCurrentUser().getEmail());
                     Name name = new Name(username);
-                    tint.setVisibility(View.VISIBLE);
-                    animationView.setVisibility(View.VISIBLE);
-                    getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     registerUser(details, name);
                 }
             }
@@ -87,76 +86,67 @@ public class UserProfileFragment extends Fragment {
         tint = rootView.findViewById(R.id.set_up_profile_tint);
     }
 
+    public boolean checkInternetConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if ((connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(call!=null)
+        if(call!=null) {
             call.cancel();
-        if(call1!=null)
+        }
+        if(call1!=null) {
             call1.cancel();
-        if(call2!=null)
+        }
+        if(call2!=null) {
             call2.cancel();
+        }
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        tint.setVisibility(View.VISIBLE);
-        animationView.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create());
-        final Retrofit retrofit = builder.build();
-        FetchUserProfile userProfile = retrofit.create(FetchUserProfile.class);
-        call2 = userProfile.fetchProfile(auth.getCurrentUser().getUid());
-        call2.enqueue(new Callback<FetchingUserProfile>() {
-            @Override
-            public void onResponse(Call<FetchingUserProfile> call, Response<FetchingUserProfile> response) {
-                if(response.body()!=null)
-                {
-                    if(response.body().getPayload().getUser().getName()!=null)
-                        {
-                            final ChangeProfile profile = retrofit.create(ChangeProfile.class);
-                            call1 = profile.changeUserName(auth.getCurrentUser().getUid(), username);
-                            call1.enqueue(new Callback<ChangeUserName>() {
-                                @Override
-                                public void onResponse(Call<ChangeUserName> call, Response<ChangeUserName> response1) {
-                                    if(response1.body()!=null) {
-                                        if (!response1.body().getPayload().getUser().isNameDefault()) {
-                                            Intent intent = new Intent(getActivity(), WorkingActivity.class);
-                                            startActivity(intent);
-                                            getActivity().finish();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<ChangeUserName> call, Throwable t) {
-                                    {
-
-                                    }
-                                }
-                            });
+        if (checkInternetConnection()) {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetDismiss();
+            tint.setVisibility(View.VISIBLE);
+            animationView.setVisibility(View.VISIBLE);
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl(BuildConfig.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create());
+            final Retrofit retrofit = builder.build();
+            FetchUserProfile userProfile = retrofit.create(FetchUserProfile.class);
+            call2 = userProfile.fetchProfile(auth.getCurrentUser().getUid());
+            call2.enqueue(new Callback<FetchingUserProfile>() {
+                @Override
+                public void onResponse(Call<FetchingUserProfile> call, Response<FetchingUserProfile> response) {
+                    if (response.body() != null) {
+                        if (response.body().getPayload().getUser().getName() != null) {
+                            Intent intent = new Intent(getActivity(), WorkingActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
                         }
                     }
-                tint.setVisibility(View.INVISIBLE);
-                animationView.setVisibility(View.INVISIBLE);
-                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    tint.setVisibility(View.INVISIBLE);
+                    animationView.setVisibility(View.INVISIBLE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
 
                 @Override
                 public void onFailure(Call<FetchingUserProfile> call, Throwable t) {
-                    if(call2.isCanceled())
-                    {
+                    if (call2.isCanceled()) {
                         tint.setVisibility(View.INVISIBLE);
                         animationView.setVisibility(View.INVISIBLE);
-                    }
-                    else
-                    {
+                    } else {
                         tint.setVisibility(View.INVISIBLE);
                         animationView.setVisibility(View.INVISIBLE);
                         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -164,6 +154,10 @@ public class UserProfileFragment extends Fragment {
                 }
             });
         }
+        else {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetShow();
+        }
+    }
 
     private boolean verifyfields() {
         if(((firstNameTextView.getText()!=null && firstNameTextView.getText().length()>0)
@@ -186,86 +180,90 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void registerUser(UserDetails details, final Name name) {
-        final Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create());
+        if (checkInternetConnection()) {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetDismiss();
+            tint.setVisibility(View.VISIBLE);
+            animationView.setVisibility(View.VISIBLE);
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            final Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl(BuildConfig.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create());
 
-        final Retrofit retrofit = builder.build();
-        final RegisteringUser user = retrofit.create(RegisteringUser.class);
-        call = user.registerPlayer(auth.getCurrentUser().getUid(), details);
-        call.enqueue(new Callback<RegistrationResponse>() {
-            @Override
-            public void onResponse(Call<RegistrationResponse> call, final Response<RegistrationResponse> response) {
-                RegistrationResponse registrationResponse = response.body();
-                if(registrationResponse.getStatusCode()==200 && (registrationResponse.isRegSuccess() ||
-                        registrationResponse.getPayload().getMsg().equals("User already registered, Signing In!")))
-                {
-
-                    final ChangeProfile profile = retrofit.create(ChangeProfile.class);
-                    call1 = profile.changeUserName(auth.getCurrentUser().getUid(), username);
-                    call1.enqueue(new Callback<ChangeUserName>() {
-                        @Override
-                        public void onResponse(Call<ChangeUserName> call, Response<ChangeUserName> response1) {
-                            if(response1.body()!=null) {
-                                if (response1.body().getStatusCode() == 200) {
-                                    SetUpActivity.getmSwitchToOtherFragments().goToRulesFragment();
-                                    tint.setVisibility(View.INVISIBLE);
-                                    animationView.setVisibility(View.INVISIBLE);
-                                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            final Retrofit retrofit = builder.build();
+            final RegisteringUser user = retrofit.create(RegisteringUser.class);
+            call = user.registerPlayer(auth.getCurrentUser().getUid(), details);
+            call.enqueue(new Callback<RegistrationResponse>() {
+                @Override
+                public void onResponse(Call<RegistrationResponse> call, final Response<RegistrationResponse> response) {
+                    RegistrationResponse registrationResponse = response.body();
+                    if (registrationResponse.getStatusCode() == 200 && (registrationResponse.isRegSuccess() ||
+                            registrationResponse.getPayload().getMsg().equals("User already registered, Signing In!"))) {
+                        if (checkInternetConnection()) {
+                            final ChangeProfile profile = retrofit.create(ChangeProfile.class);
+                            call1 = profile.changeUserName(auth.getCurrentUser().getUid(), username);
+                            call1.enqueue(new Callback<ChangeUserName>() {
+                                @Override
+                                public void onResponse(Call<ChangeUserName> call, Response<ChangeUserName> response1) {
+                                    if (response1.body() != null) {
+                                        if (response1.body().getStatusCode() == 200) {
+                                            SetUpActivity.getmSwitchToOtherFragments().goToRulesFragment();
+                                            tint.setVisibility(View.INVISIBLE);
+                                            animationView.setVisibility(View.INVISIBLE);
+                                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                        }
+                                    } else {
+                                        makeSnackbar(done, "Username Already Taken!");
+                                        tint.setVisibility(View.INVISIBLE);
+                                        animationView.setVisibility(View.INVISIBLE);
+                                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                makeSnackbar(done, "Username Already Taken!");
-                                tint.setVisibility(View.INVISIBLE);
-                                animationView.setVisibility(View.INVISIBLE);
-                                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                            }
+
+                                @Override
+                                public void onFailure(Call<ChangeUserName> call, Throwable t) {
+                                    if (call1.isCanceled()) {
+                                        tint.setVisibility(View.INVISIBLE);
+                                        animationView.setVisibility(View.INVISIBLE);
+                                    } else {
+                                        tint.setVisibility(View.INVISIBLE);
+                                        animationView.setVisibility(View.INVISIBLE);
+                                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                    }
+                                }
+                            });
                         }
-
-                        @Override
-                        public void onFailure(Call<ChangeUserName> call, Throwable t) {
-                                if(call1.isCanceled())
-                                {
-                                    tint.setVisibility(View.INVISIBLE);
-                                    animationView.setVisibility(View.INVISIBLE);
-                                }
-                                else
-                                {
-                                    tint.setVisibility(View.INVISIBLE);
-                                    animationView.setVisibility(View.INVISIBLE);
-                                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                                }
+                        else
+                        {
+                            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetShow();
                         }
-                    });
+                    }
+                    else {
+                        makeSnackbar(done, response.body().getPayload().getMsg());
+                        tint.setVisibility(View.INVISIBLE);
+                        animationView.setVisibility(View.INVISIBLE);
+                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
+                }
 
-                }
-                else
-                {
-                    makeSnackbar(done, response.body().getPayload().getMsg());
-                    tint.setVisibility(View.INVISIBLE);
-                    animationView.setVisibility(View.INVISIBLE);
-                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                }
-            }
+                @Override
+                public void onFailure(Call<RegistrationResponse> call, Throwable t) {
+                    if (call.isCanceled()) {
+                        tint.setVisibility(View.INVISIBLE);
+                        animationView.setVisibility(View.INVISIBLE);
+                    } else {
+                        makeSnackbar(done, "Some Error Occured, Please Try later");
+                        tint.setVisibility(View.INVISIBLE);
+                        animationView.setVisibility(View.INVISIBLE);
+                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-            @Override
-            public void onFailure(Call<RegistrationResponse> call, Throwable t) {
-                if(call.isCanceled())
-                {
-                    tint.setVisibility(View.INVISIBLE);
-                    animationView.setVisibility(View.INVISIBLE);
+                    }
                 }
-                else
-                {
-                    makeSnackbar(done, "Some Error Occured, Please Try later");
-                    tint.setVisibility(View.INVISIBLE);
-                    animationView.setVisibility(View.INVISIBLE);
-                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-
-                }
-            }
-        });
+            });
+        }
+        else {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetShow();
+        }
     }
 
     private void makeSnackbar(View view, String msg) {

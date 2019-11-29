@@ -3,7 +3,10 @@ package com.example.enigma.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.FrameLayout;
 
 import com.example.enigma.Fragments.ForgotPasswordBottomSheet;
 import com.example.enigma.Fragments.LoginFragment;
@@ -12,11 +15,14 @@ import com.example.enigma.Interfaces.SwitchToOtherFragments;
 import com.example.enigma.R;
 import com.example.enigma.Fragments.SignupFragment;
 import com.example.enigma.Fragments.UserProfileFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 public class SetUpActivity extends AppCompatActivity {
 
     static SwitchToOtherFragments mSwitchToOtherFragments;
     private FragmentManager manager;
+    private Snackbar snackbar;
+    private FrameLayout frameLayout;
     private ForgotPasswordBottomSheet forgotPasswordBottomSheet = new ForgotPasswordBottomSheet();
 
     @Override
@@ -63,10 +69,25 @@ public class SetUpActivity extends AppCompatActivity {
             public void openForgotPasswordBottomSheet() {
                 forgotPasswordBottomSheet.show(getSupportFragmentManager(), forgotPasswordBottomSheet.getTag());
             }
+
+            @Override
+            public void snackBarInternetShow() {
+                snackbar = Snackbar.make(frameLayout, "Connect To Internet", Snackbar.LENGTH_INDEFINITE);
+                snackbar.show();
+            }
+
+            @Override
+            public void snackBarInternetDismiss() {
+                if(snackbar!=null)
+                {
+                    snackbar.dismiss();
+                }
+            }
         };
     }
 
     private void initialize() {
+        frameLayout = findViewById(R.id.Container);
         manager = getSupportFragmentManager();
     }
 

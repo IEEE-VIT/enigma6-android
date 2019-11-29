@@ -71,6 +71,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="5dp"
             android:singleLine="true"
+            android:textColor="@color/black"
             android:textColorHighlight="@color/black"
             android:textColorLink="@color/black"
             android:textStyle="normal"

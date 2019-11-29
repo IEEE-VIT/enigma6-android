@@ -131,59 +131,64 @@ public class LoginFragment extends Fragment {
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        user = auth.getCurrentUser();
-        if (user != null && user.isEmailVerified()) {
-            tint.setVisibility(View.VISIBLE);
-            animationView.setVisibility(View.VISIBLE);
-            animationView.setSpeed(1);
-            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            Retrofit.Builder builder = new Retrofit.Builder()
-                    .baseUrl(BuildConfig.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create());
-            Retrofit retrofit = builder.build();
-            FetchUserProfile userProfile = retrofit.create(FetchUserProfile.class);
-            call = userProfile.fetchProfile(auth.getCurrentUser().getUid());
-            call.enqueue(new Callback<FetchingUserProfile>() {
-                @Override
-                public void onResponse(Call<FetchingUserProfile> call, Response<FetchingUserProfile> response) {
-                    if (response.body() != null) {
-                        if (response.body().getPayload().getUser().getName() != null) {
-                            Intent intent = new Intent(getActivity(), WorkingActivity.class);
-                            startActivity(intent);
-                            getActivity().finish();
-                        }
-                    }
-                    animationView.setVisibility(View.GONE);
-                    tint.setVisibility(View.INVISIBLE);
-                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                }
-
-                @Override
-                public void onFailure(Call<FetchingUserProfile> call, Throwable t) {
-                    if (call.isCanceled()) {
-                        animationView.setVisibility(View.GONE);
-                        tint.setVisibility(View.INVISIBLE);
-                    } else {
-                        animationView.setVisibility(View.GONE);
-                        tint.setVisibility(View.INVISIBLE);
-                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                    }
-                }
-            });
+    public boolean checkInternetConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if ((connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (!(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
-            makeSnackbar("Please connect to your Internet", login);
+    public void onStart() {
+        super.onStart();
+        if (checkInternetConnection()) {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetDismiss();
+            user = auth.getCurrentUser();
+            if (user != null && user.isEmailVerified()) {
+                tint.setVisibility(View.VISIBLE);
+                animationView.setVisibility(View.VISIBLE);
+                animationView.setSpeed(1);
+                getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                Retrofit.Builder builder = new Retrofit.Builder()
+                        .baseUrl(BuildConfig.BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create());
+                Retrofit retrofit = builder.build();
+                FetchUserProfile userProfile = retrofit.create(FetchUserProfile.class);
+                call = userProfile.fetchProfile(auth.getCurrentUser().getUid());
+                call.enqueue(new Callback<FetchingUserProfile>() {
+                    @Override
+                    public void onResponse(Call<FetchingUserProfile> call, Response<FetchingUserProfile> response) {
+                        if (response.body() != null) {
+                            if (response.body().getPayload().getUser().getName() != null) {
+                                Intent intent = new Intent(getActivity(), WorkingActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                            }
+                        }
+                        animationView.setVisibility(View.GONE);
+                        tint.setVisibility(View.INVISIBLE);
+                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<FetchingUserProfile> call, Throwable t) {
+                        if (call.isCanceled()) {
+                            animationView.setVisibility(View.GONE);
+                            tint.setVisibility(View.INVISIBLE);
+                        } else {
+                            animationView.setVisibility(View.GONE);
+                            tint.setVisibility(View.INVISIBLE);
+                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        }
+                    }
+                });
+            }
+        } else {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetShow();
         }
     }
 
@@ -192,110 +197,134 @@ public class LoginFragment extends Fragment {
     }
 
     private void googleLoginProcess() {
-        animationView.setVisibility(View.VISIBLE);
-        tint.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        if (checkInternetConnection()) {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetDismiss();
+            animationView.setVisibility(View.VISIBLE);
+            tint.setVisibility(View.VISIBLE);
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-        Intent signInIntent = googleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+            Intent signInIntent = googleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        } else {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetShow();
+        }
     }
 
     private void normalLogin() {
-        tint.setVisibility(View.VISIBLE);
-        animationView.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        emailText = email.getText().toString();
-        passwordText = password.getText().toString();
+        if (checkInternetConnection()) {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetDismiss();
+            tint.setVisibility(View.VISIBLE);
+            animationView.setVisibility(View.VISIBLE);
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            emailText = email.getText().toString();
+            passwordText = password.getText().toString();
 
-        if ((email.getText() != null && emailText.length() > 0)
-                && (password.getText() != null && passwordText.length() > 0)) {
-            auth.signInWithEmailAndPassword(emailText, passwordText)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                if (Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified()) {
-                                    SetUpActivity.getmSwitchToOtherFragments().goToUserProfileFragment();
-                                } else {
-                                    Snackbar.make(login, "Verify Email", Snackbar.LENGTH_SHORT)
-                                            .setAction("Resend", new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View view) {
-                                                    user = auth.getCurrentUser();
-                                                    user.sendEmailVerification()
-                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                @Override
-                                                                public void onComplete(@NonNull Task<Void> task) {
-                                                                    if (task.isSuccessful()) {
-                                                                        makeSnackbar("Email sent again", login);
+            if ((email.getText() != null && emailText.length() > 0)
+                    && (password.getText() != null && passwordText.length() > 0)) {
+                auth.signInWithEmailAndPassword(emailText, passwordText)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    if (Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified()) {
+                                        SetUpActivity.getmSwitchToOtherFragments().goToUserProfileFragment();
+                                    } else {
+                                        Snackbar.make(login, "Verify Email", Snackbar.LENGTH_SHORT)
+                                                .setAction("Resend", new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        user = auth.getCurrentUser();
+                                                        user.sendEmailVerification()
+                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            makeSnackbar("Email sent again", login);
 
-                                                                    } else {
-                                                                        makeSnackbar("Some Error Occured Try Later", login);
+                                                                        } else {
+                                                                            makeSnackbar("Some Error Occured Try Later", login);
+                                                                        }
                                                                     }
-                                                                }
-                                                            });
-                                                }
-                                            })
-                                            .show();
+                                                                });
+                                                    }
+                                                })
+                                                .show();
+                                        tint.setVisibility(View.INVISIBLE);
+                                        animationView.setVisibility(View.INVISIBLE);
+                                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                                    }
+                                } else {
+                                    makeSnackbar("Wrong Details", login);
                                     tint.setVisibility(View.INVISIBLE);
                                     animationView.setVisibility(View.INVISIBLE);
                                     getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 }
+                            }
+                        });
+            } else {
+                makeSnackbar("Please enter all the fields", login);
+                tint.setVisibility(View.INVISIBLE);
+                animationView.setVisibility(View.INVISIBLE);
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            }
+        }
+        else
+        {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetShow();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (checkInternetConnection()) {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetDismiss();
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == RC_SIGN_IN) {
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                try {
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    firebaseAuthWithGoogle(account);
+                } catch (ApiException e) {
+                    tint.setVisibility(View.INVISIBLE);
+                    animationView.setVisibility(View.INVISIBLE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    e.printStackTrace();
+                }
+            }
+        }
+        else {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetShow();
+        }
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        if (checkInternetConnection()) {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetDismiss();
+            AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+            auth.signInWithCredential(credential)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = auth.getCurrentUser();
+                                SetUpActivity.getmSwitchToOtherFragments().goToUserProfileFragment();
+                                tint.setVisibility(View.INVISIBLE);
+                                animationView.setVisibility(View.INVISIBLE);
+                                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                             } else {
-                                makeSnackbar("Wrong Details", login);
+                                makeSnackbar("Some Error Occured Try After some time", googleLogin);
                                 tint.setVisibility(View.INVISIBLE);
                                 animationView.setVisibility(View.INVISIBLE);
                                 getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                             }
                         }
                     });
-        } else {
-            makeSnackbar("Please enter all the fields", login);
-            tint.setVisibility(View.INVISIBLE);
-            animationView.setVisibility(View.INVISIBLE);
-            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                tint.setVisibility(View.INVISIBLE);
-                animationView.setVisibility(View.INVISIBLE);
-                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                e.printStackTrace();
-            }
+        else {
+            SetUpActivity.getmSwitchToOtherFragments().snackBarInternetShow();
         }
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = auth.getCurrentUser();
-                            SetUpActivity.getmSwitchToOtherFragments().goToUserProfileFragment();
-                            tint.setVisibility(View.INVISIBLE);
-                            animationView.setVisibility(View.INVISIBLE);
-                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                        } else {
-                            makeSnackbar("Some Error Occured Try After some time", googleLogin);
-                            tint.setVisibility(View.INVISIBLE);
-                            animationView.setVisibility(View.INVISIBLE);
-                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                        }
-                    }
-                });
     }
 
     private void makeSnackbar(String message, View view) {

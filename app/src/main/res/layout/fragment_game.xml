@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:src="@mipmap/yellow_hamburger"
+                android:src="@drawable/yellow_hamburger"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -210,12 +210,12 @@
         app:backgroundTint="@color/yellow"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="@+id/game_tint"
-        app:srcCompat="@mipmap/key" />
+        app:srcCompat="@drawable/key" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="402dp"
-        android:layout_height="71dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -230,7 +230,7 @@
         android:layout_marginStart="16dp"
         android:text="SCORE -"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/game_tint"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView3" />
@@ -242,7 +242,7 @@
         android:layout_marginEnd="4dp"
         android:text="RANK -"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/game_rank"
         app:layout_constraintTop_toTopOf="@+id/imageView3" />

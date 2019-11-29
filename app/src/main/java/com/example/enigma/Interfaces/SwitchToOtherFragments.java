@@ -6,5 +6,7 @@ public interface SwitchToOtherFragments {
     void goToRulesFragment();
     void pop();
     void openForgotPasswordBottomSheet();
+    void snackBarInternetShow();
+    void snackBarInternetDismiss();
 }
 

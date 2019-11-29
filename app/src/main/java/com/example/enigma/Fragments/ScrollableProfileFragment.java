@@ -1,5 +1,8 @@
 package com.example.enigma.Fragments;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,73 +95,87 @@ public class ScrollableProfileFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        call.cancel();
+        if(call!=null)
+        {
+            call.cancel();
+        }
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
-    private void loadProfileDeatils() {
-        tint.setVisibility(View.VISIBLE);
-        animationView.setVisibility(View.VISIBLE);
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create());
-        Retrofit retrofit = builder.build();
-        FetchUserProfile userProfile = retrofit.create(FetchUserProfile.class);
-        call = userProfile.fetchProfile(auth.getCurrentUser().getUid());
-        call.enqueue(new Callback<FetchingUserProfile>() {
-            @Override
-            public void onResponse(Call<FetchingUserProfile> call, Response<FetchingUserProfile> response) {
-                if(response.body().getStatusCode()==200 && response.body().getPayload()!=null) {
-                    username.setText(response.body().getPayload().getUser().getName());
-                    email.setText(response.body().getPayload().getUser().getEmail());
-                    if(response.body().getPayload().getUser().getUsedHint()!=null) {
-                        for(boolean f :response.body().getPayload().getUser().getUsedHint())
-                        {
-                            if(f)
-                                usedHintCount+=1;
-                        }
-                        hintsUsed.setText(String.valueOf(usedHintCount));
-                        usedHintCount=0;
-                    }
-                    else
-                    {
-                                hintsUsed.setText("0");
-                    }
-                    questionSolved.setText(String.valueOf((response.body().getPayload().getUser().getLevel())-1));
-                    score.setText(String.valueOf((int)response.body().getPayload().getUser().getPoints()));
-                    rank.setText(String.valueOf(response.body().getPayload().getUser().getRank()));
-                }
-                else
-                {
-                    makaSnackbar(hamburger, "Some error Occured");
-                }
-                animationView.setVisibility(View.GONE);
-                tint.setVisibility(View.INVISIBLE);
-                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            }
+    public boolean checkInternetConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if ((connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED)) {
+            return true;
+        } else {
+            return false;
+        }
 
-            @Override
-            public void onFailure(Call<FetchingUserProfile> call, Throwable t) {
-                if(call.isCanceled())
-                {
-                    animationView.setVisibility(View.GONE);
-                    tint.setVisibility(View.INVISIBLE);
-                }
-                else
-                {
+    }
+
+    private void loadProfileDeatils() {
+        WorkingActivity.getOpenBottomSheets().snackBarInternetDismiss();
+        if (checkInternetConnection()) {
+            tint.setVisibility(View.VISIBLE);
+            animationView.setVisibility(View.VISIBLE);
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl(BuildConfig.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+            FetchUserProfile userProfile = retrofit.create(FetchUserProfile.class);
+            call = userProfile.fetchProfile(auth.getCurrentUser().getUid());
+            call.enqueue(new Callback<FetchingUserProfile>() {
+                @Override
+                public void onResponse(Call<FetchingUserProfile> call, Response<FetchingUserProfile> response) {
+                    if (response.body().getStatusCode() == 200 && response.body().getPayload() != null) {
+                        username.setText(response.body().getPayload().getUser().getName());
+
+                        email.setText(response.body().getPayload().getUser().getEmail());
+                        if (response.body().getPayload().getUser().getUsedHint() != null) {
+                            for (boolean f : response.body().getPayload().getUser().getUsedHint()) {
+                                if (f)
+                                    usedHintCount += 1;
+                            }
+                            hintsUsed.setText(String.valueOf(usedHintCount));
+                            usedHintCount = 0;
+                        } else {
+                            hintsUsed.setText("0");
+                        }
+                        questionSolved.setText(String.valueOf((response.body().getPayload().getUser().getLevel()) - 1));
+                        score.setText(String.valueOf((int) response.body().getPayload().getUser().getPoints()));
+                        rank.setText(String.valueOf(response.body().getPayload().getUser().getRank()));
+                    } else {
+                        makaSnackbar(hamburger, "Some error Occured");
+                    }
                     animationView.setVisibility(View.GONE);
                     tint.setVisibility(View.INVISIBLE);
                     getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
 
-            }
-        });
+                @Override
+                public void onFailure(Call<FetchingUserProfile> call, Throwable t) {
+                    if (call.isCanceled()) {
+                        animationView.setVisibility(View.GONE);
+                        tint.setVisibility(View.INVISIBLE);
+                    } else {
+                        animationView.setVisibility(View.GONE);
+                        tint.setVisibility(View.INVISIBLE);
+                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
+
+                }
+            });
+        }
+        else
+        {
+            WorkingActivity.getOpenBottomSheets().snackBarInternetShow();
+        }
     }
 
     private void makaSnackbar(View view, String msg) {
-        Snackbar.make(view, msg, BaseTransientBottomBar.LENGTH_SHORT)
+        Snackbar.make(view, msg, Snackbar.LENGTH_SHORT)
                 .show();
     }
 
