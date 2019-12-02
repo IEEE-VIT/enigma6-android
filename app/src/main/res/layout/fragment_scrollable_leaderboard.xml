@@ -81,7 +81,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="203dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 android:src="@drawable/winner"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.5" />
@@ -103,7 +103,7 @@
                     android:id="@+id/leaderboard_hamburger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:foregroundGravity="left"
+                    android:foregroundGravity="left|center"
                     android:paddingStart="8dp"
                     android:src="@drawable/hamburger" />
 

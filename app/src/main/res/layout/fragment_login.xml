@@ -19,8 +19,9 @@
 
     <ImageView
         android:id="@+id/hoodie_login_image"
-        android:layout_width="415dp"
+        android:layout_width="match_parent"
         android:layout_height="185dp"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
@@ -165,7 +166,6 @@
         android:id="@+id/login_button_login_fragment"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
         android:shadowRadius="8"

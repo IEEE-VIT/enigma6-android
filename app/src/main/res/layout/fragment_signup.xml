@@ -18,8 +18,9 @@
 
     <ImageView
         android:id="@+id/hoodie_sign_up_image"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="182dp"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

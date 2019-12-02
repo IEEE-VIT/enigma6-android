@@ -140,16 +140,44 @@
                 android:gravity="center_horizontal"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipis cing elit, sed do eiusmod tempor incididunt ut l abore et dolore magna aliqua. Ut enim ad mini m veniam, quis nostrud exercitation ullamco la boris nisi ut aliquip ex ea commodo consequat.  Duis aute irure dolor in reprehenderit in volupt ate velit esse cillum dolore eu fugiat nulla paria tur. "
                 android:textSize="18sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/answer_edit_text_game_fragment"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/question_image" />
+                app:layout_constraintTop_toBottomOf="@+id/question_image"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_text_container_5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:duration="3000"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/question_text_view_game_fragment"
+                app:layout_constraintEnd_toEndOf="@+id/shimmer_view_container"
+                app:layout_constraintStart_toStartOf="@+id/shimmer_view_container"
+                app:layout_constraintTop_toBottomOf="@+id/shimmer_view_container">
+
+                <include
+                    layout="@layout/shimmer_effect_questing_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible"
+                    tools:layout_editor_absoluteX="11dp"
+                    tools:layout_editor_absoluteY="326dp" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
 
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmer_view_container"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:layout_marginStart="16dp"
                 android:duration="3000"
@@ -168,7 +196,10 @@
                     app:layout_constraintStart_toStartOf="@+id/question_image"
                     app:layout_constraintTop_toTopOf="@+id/question_image">
 
-                    <include layout="@layout/shimmer_effect_image_view" />
+                    <include
+                        layout="@layout/shimmer_effect_image_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
 
@@ -194,6 +225,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/answer_edit_text_game_fragment"
                 app:layout_constraintVertical_bias="0.029999971" />
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

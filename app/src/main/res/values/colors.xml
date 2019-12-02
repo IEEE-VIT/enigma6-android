@@ -15,4 +15,9 @@
     <color name="purple">#a422ff</color>
     <color name="background">#dddddd</color>
     <color name="snow">#EEE9E9</color>
+    <color name="jet_black">#000000</color>
+
+    <color name="colorErrorSnackbar">#D93B38</color>
+    <color name="colorSuccessSnackbar">#39C79D</color>
+
 </resources>
