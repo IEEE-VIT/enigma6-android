@@ -79,6 +79,7 @@
         android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/jet_black"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,15 +88,17 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/black">
+            android:background="@color/jet_black">
+
 
             <EditText
                 android:id="@+id/answer_edit_text_game_fragment"
                 android:layout_width="0dp"
                 android:layout_height="102dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/custom_edit_text"
                 android:focusable="auto"
                 android:fontFamily="@font/saira_regular"
@@ -109,9 +112,9 @@
                 android:scrollHorizontally="false"
                 android:selectAllOnFocus="false"
                 android:textAlignment="gravity"
-                app:layout_constraintBottom_toTopOf="@+id/submit_material_button_game_fragment"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/question_text_view_game_fragment" />
 
@@ -120,7 +123,7 @@
                 android:layout_width="0dp"
                 android:layout_height="240dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -136,6 +139,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/saira_regular"
                 android:gravity="center_horizontal"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipis cing elit, sed do eiusmod tempor incididunt ut l abore et dolore magna aliqua. Ut enim ad mini m veniam, quis nostrud exercitation ullamco la boris nisi ut aliquip ex ea commodo consequat.  Duis aute irure dolor in reprehenderit in volupt ate velit esse cillum dolore eu fugiat nulla paria tur. "
@@ -173,7 +177,6 @@
             </com.facebook.shimmer.ShimmerFrameLayout>
 
 
-
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmer_view_container"
                 android:layout_width="0dp"
@@ -204,30 +207,6 @@
                 </LinearLayout>
 
             </com.facebook.shimmer.ShimmerFrameLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/submit_material_button_game_fragment"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:gravity="center"
-                android:shadowRadius="8"
-                android:text="@string/submit"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="normal"
-                app:backgroundTint="@color/yellow"
-                app:fontFamily="@font/saira"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/answer_edit_text_game_fragment"
-                app:layout_constraintVertical_bias="0.029999971" />
-
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -310,8 +289,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.75"
-        android:visibility="invisible"
         android:foreground="@color/black"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

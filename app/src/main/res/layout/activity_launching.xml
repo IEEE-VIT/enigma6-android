@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@drawable/launching"
-    tools:context=".Activities.LaunchingActivity">
+    tools:context=".activities.LaunchingActivity">
 
     <ImageView
         android:id="@+id/ring_image"

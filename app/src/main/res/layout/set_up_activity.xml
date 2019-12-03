@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/setUpActivty"
-    tools:context=".Activities.SetUpActivity">
+    tools:context=".activities.SetUpActivity">
 
     <FrameLayout
         android:id="@+id/Container"
