@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,19 +24,19 @@ public class LaunchingActivity extends AppCompatActivity {
     private ImageView arrowButton;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference enigmaStartedReference;
-    private TextView comingSoon;
+    private TextView registration;
+    private TextView date;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launching);
 
-        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        checkLoggedInState();
-
         arrowButton = findViewById(R.id.arrow_button);
         ring = findViewById(R.id.ring_image);
-        comingSoon = findViewById(R.id.coming_soon);
+        registration = findViewById(R.id.regsitration);
+        date = findViewById(R.id.date_time);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         enigmaStartedReference = firebaseDatabase.getReference().child("state");
@@ -50,13 +48,18 @@ public class LaunchingActivity extends AppCompatActivity {
                  {
                      ring.setVisibility(View.VISIBLE);
                      arrowButton.setVisibility(View.VISIBLE);
-                     comingSoon.setVisibility(View.GONE);
+                     date.setVisibility(View.GONE);
+                     registration.setVisibility(View.GONE);
                  }
                  else
                  {
+
+                     date.setText(enigmaStatus.getSecondaryMessage());
+                     registration.setText(enigmaStatus.getPrimaryMessage());
                      ring.setVisibility(View.GONE);
                      arrowButton.setVisibility(View.GONE);
-                     comingSoon.setVisibility(View.VISIBLE);
+                     registration.setVisibility(View.VISIBLE);
+                     date.setVisibility(View.VISIBLE);
                  }
             }
 
@@ -70,23 +73,20 @@ public class LaunchingActivity extends AppCompatActivity {
         arrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LaunchingActivity.this, SetUpActivity.class);
+                Intent intent = new Intent(LaunchingActivity.this, WorkingActivity.class);
                 startActivity(intent);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("LoggedIn", 1);
-                editor.apply();
                 finish();
             }
         });
 
     }
 
-    private void checkLoggedInState() {
-        if(sharedPreferences.getInt("LoggedIn", 0) == 1)
-        {
-            Intent intent = new Intent(LaunchingActivity.this, SetUpActivity.class);
-            startActivity(intent);
-            finish();
-        }
+    void showTimer(){
+
     }
+
+    void stopTimer(){
+
+    }
+
 }

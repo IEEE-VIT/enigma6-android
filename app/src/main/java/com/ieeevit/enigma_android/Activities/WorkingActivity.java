@@ -6,15 +6,25 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.ieeevit.enigma_android.EnigmaStatus;
 import com.ieeevit.enigma_android.Fragments.ChangeUsernameBottomSheetFragment;
 import com.ieeevit.enigma_android.Fragments.GameFragment;
 import com.ieeevit.enigma_android.Fragments.HintBottomSheet;
@@ -53,6 +63,9 @@ public class WorkingActivity extends AppCompatActivity implements NetworkStateRe
     private static UpdateUsernameInterface updateUsernameInterface;
     private NetworkStateReceiver networkStateReceiver;
     private int isShown = 1;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference enigmaStartedReference;
+    private SharedPreferences sharedPreferences;
 
 
 
@@ -285,14 +298,12 @@ public class WorkingActivity extends AppCompatActivity implements NetworkStateRe
 
             @Override
             public void snackBarInternetShow() {
-                if (isShown > 1) {
                     snackbar = Snackbar.make(drawer, "Internet Connection Lost!", Snackbar.LENGTH_INDEFINITE);
                     snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorErrorSnackbar));
                     snackbar.show();
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                } else {
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     isShown++;
-                }
             }
 
             @Override
@@ -304,8 +315,7 @@ public class WorkingActivity extends AppCompatActivity implements NetworkStateRe
                     Snackbar newSnackbar = Snackbar.make(drawer, "You are now connected!", Snackbar.LENGTH_SHORT);
                     newSnackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorSuccessSnackbar));
                     newSnackbar.show();
-                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     isShown++;
                 }
@@ -370,6 +380,7 @@ public class WorkingActivity extends AppCompatActivity implements NetworkStateRe
     private void intializeViews() {
         drawer = findViewById(R.id.drawer_layout);
         manager = getSupportFragmentManager();
+        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         navigationView = findViewById(R.id.nvView);
         fragmentStack = new Stack<>();
         linkedIn = navigationView.findViewById(R.id.linkedln);
@@ -407,6 +418,29 @@ public class WorkingActivity extends AppCompatActivity implements NetworkStateRe
         networkStateReceiver = new NetworkStateReceiver();
         networkStateReceiver.addListener(this);
         this.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        enigmaStartedReference = firebaseDatabase.getReference().child("state");
+        enigmaStartedReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                EnigmaStatus enigmaStatus = dataSnapshot.getValue(EnigmaStatus.class);
+                if(!enigmaStatus.getHasStarted())
+                {
+                    Intent intent = new Intent(WorkingActivity.this, LaunchingActivity.class);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("Finished", 1);
+                    editor.apply();
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

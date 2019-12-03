@@ -3,6 +3,7 @@ package com.ieeevit.enigma_android.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.VideoView;
@@ -12,6 +13,8 @@ import com.ieeevit.enigma_android.R;
 public class SplashActivity extends AppCompatActivity {
 
     private VideoView video;
+    private SharedPreferences  sharedPreferences;
+    private int flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +27,16 @@ public class SplashActivity extends AppCompatActivity {
             video.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
-                    Intent intent = new Intent(SplashActivity.this, LaunchingActivity.class);
+                    if(flag == 0) {
+                    Intent intent = new Intent(SplashActivity.this, SetUpActivity.class);
                     startActivity(intent);
-                    finish();
+                    finish(); }
+                    else
+                    {
+                        Intent intent = new Intent(SplashActivity.this, LaunchingActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             });
             video.start();
@@ -38,6 +48,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         video.start();
+        sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        flag = sharedPreferences.getInt("Finished", 0);
     }
 
     @Override

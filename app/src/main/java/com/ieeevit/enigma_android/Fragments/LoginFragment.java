@@ -14,9 +14,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.ieeevit.enigma_android.Activities.LaunchingActivity;
 import com.ieeevit.enigma_android.Activities.SetUpActivity;
 import com.ieeevit.enigma_android.Activities.WorkingActivity;
 import com.ieeevit.enigma_android.BuildConfig;
+import com.ieeevit.enigma_android.EnigmaStatus;
 import com.ieeevit.enigma_android.Interfaces.FetchUserProfile;
 import com.ieeevit.enigma_android.Models.FetchingUserProfile;
 import com.ieeevit.enigma_android.R;
@@ -63,6 +70,8 @@ public class LoginFragment extends Fragment {
     private Call<FetchingUserProfile> call;
     private LottieAnimationView animationView;
     private ImageView tint;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference enigmaStartedReference;
 
     public LoginFragment() {
     }
@@ -115,58 +124,61 @@ public class LoginFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         animationView = rootView.findViewById(R.id.lottie_animation);
         tint = rootView.findViewById(R.id.login_tint);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        enigmaStartedReference = firebaseDatabase.getReference().child("state");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-            user = auth.getCurrentUser();
-            if (user != null && user.isEmailVerified()) {
-                tint.setVisibility(View.VISIBLE);
-                animationView.setVisibility(View.VISIBLE);
-                animationView.setSpeed(1);
+        user = auth.getCurrentUser();
+        if (user != null && user.isEmailVerified()) {
+            tint.setVisibility(View.VISIBLE);
+            animationView.setVisibility(View.VISIBLE);
+            animationView.setSpeed(1);
+            if(getActivity()!=null)
                 getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                Retrofit.Builder builder = new Retrofit.Builder()
-                        .baseUrl(BuildConfig.BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create());
-                Retrofit retrofit = builder.build();
-                FetchUserProfile userProfile = retrofit.create(FetchUserProfile.class);
-                call = userProfile.fetchProfile(auth.getCurrentUser().getUid());
-                call.enqueue(new Callback<FetchingUserProfile>() {
-                    @Override
-                    public void onResponse(Call<FetchingUserProfile> call, Response<FetchingUserProfile> response) {
-                        if (response.body() != null) {
-                            if (response.body().getPayload().getUser().getName() != null) {
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl(BuildConfig.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+            FetchUserProfile userProfile = retrofit.create(FetchUserProfile.class);
+            call = userProfile.fetchProfile(auth.getCurrentUser().getUid());
+            call.enqueue(new Callback<FetchingUserProfile>() {
+                @Override
+                public void onResponse(Call<FetchingUserProfile> call, Response<FetchingUserProfile> response) {
+                    if (response.body() != null) {
+                        if (response.body().getPayload().getUser().getName() != null) {
+                            if (getActivity() != null) {
+                                Intent intent = new Intent(getActivity(), LaunchingActivity.class);
+                                animationView.setVisibility(View.GONE);
+                                tint.setVisibility(View.INVISIBLE);
                                 if (getActivity() != null) {
-                                    Intent intent = new Intent(getActivity(), WorkingActivity.class);
-                                    animationView.setVisibility(View.GONE);
-                                    tint.setVisibility(View.INVISIBLE);
-                                    if (getActivity() != null) {
-                                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                                    }
-                                    startActivity(intent);
-                                    getActivity().finish();
+                                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                                 }
+                                startActivity(intent);
+                                getActivity().finish();
                             }
                         }
                     }
-
-                        @Override
-                        public void onFailure (Call < FetchingUserProfile > call, Throwable t){
-                            if (call.isCanceled()) {
-                                animationView.setVisibility(View.GONE);
-                                tint.setVisibility(View.INVISIBLE);
-                            } else {
-                                animationView.setVisibility(View.GONE);
-                                tint.setVisibility(View.INVISIBLE);
-                                if (getActivity() != null)
-                                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                            }
-                        }
-                    });
                 }
-            }
+                @Override
+                public void onFailure (Call < FetchingUserProfile > call, Throwable t){
+                    if (call.isCanceled()) {
+                        animationView.setVisibility(View.GONE);
+                        tint.setVisibility(View.INVISIBLE);
+                    } else {
+                        animationView.setVisibility(View.GONE);
+                        tint.setVisibility(View.INVISIBLE);
+                        if (getActivity() != null)
+                            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
+                }
+            });
+        }
+    }
+
 
         private void changePassword () {
             SetUpActivity.getmSwitchToOtherFragments().openForgotPasswordBottomSheet();

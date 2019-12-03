@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.ieeevit.enigma_android.Activities.LaunchingActivity;
+import com.ieeevit.enigma_android.Activities.SetUpActivity;
+import com.ieeevit.enigma_android.Activities.SplashActivity;
 import com.ieeevit.enigma_android.Activities.WorkingActivity;
 import com.ieeevit.enigma_android.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -22,7 +24,6 @@ public class LogoutBottomSheet extends BottomSheetDialogFragment {
 
     private MaterialButton yesButton;
     private MaterialButton noButton;
-    private SharedPreferences preferences;
 
     public LogoutBottomSheet() {
     }
@@ -37,12 +38,9 @@ public class LogoutBottomSheet extends BottomSheetDialogFragment {
         yesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), LaunchingActivity.class);
+                Intent intent = new Intent(getActivity(), SetUpActivity.class);
                 FirebaseAuth.getInstance().signOut();
                 startActivity(intent);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt("LoggedIn", 0);
-                editor.apply();
                 getActivity().finish();
             }
         });
@@ -60,6 +58,5 @@ public class LogoutBottomSheet extends BottomSheetDialogFragment {
     private void initialize(View rootView) {
         yesButton = rootView.findViewById(R.id.yes_logout);
         noButton = rootView.findViewById(R.id.no_logout);
-        preferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
     }
 }

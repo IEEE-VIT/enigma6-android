@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
@@ -91,14 +93,12 @@ public class SetUpActivity extends AppCompatActivity implements NetworkStateRece
 
             @Override
             public void snackBarInternetShow() {
-                if (isShown > 1) {
                     snackbar = Snackbar.make(frameLayout, "Internet Connection Lost!", Snackbar.LENGTH_INDEFINITE);
                     snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorErrorSnackbar));
                     snackbar.show();
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                } else {
+                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     isShown++;
-                }
             }
 
             @Override
@@ -110,8 +110,7 @@ public class SetUpActivity extends AppCompatActivity implements NetworkStateRece
                     Snackbar newSnackbar = Snackbar.make(frameLayout, "You are now connected!", Snackbar.LENGTH_SHORT);
                     newSnackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorSuccessSnackbar));
                     newSnackbar.show();
-                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     isShown++;
                 }
@@ -134,6 +133,7 @@ public class SetUpActivity extends AppCompatActivity implements NetworkStateRece
                         R.anim.exit_left_to_right)
                 .replace(R.id.Container, fragment)
                 .commit();
+
     }
 
     public static SwitchToOtherFragments getmSwitchToOtherFragments() {

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.airbnb.lottie.LottieAnimationView;
+import com.ieeevit.enigma_android.Activities.LaunchingActivity;
 import com.ieeevit.enigma_android.Activities.SetUpActivity;
 import com.ieeevit.enigma_android.Activities.WorkingActivity;
 import com.ieeevit.enigma_android.BuildConfig;
@@ -118,7 +119,7 @@ public class UserProfileFragment extends Fragment {
                 public void onResponse(Call<FetchingUserProfile> call, Response<FetchingUserProfile> response) {
                     if (response.body() != null) {
                         if (response.body().getPayload().getUser().getName() != null) {
-                            Intent intent = new Intent(getActivity(), WorkingActivity.class);
+                            Intent intent = new Intent(getActivity(), LaunchingActivity.class);
                             startActivity(intent);
                             getActivity().finish();
                         }
@@ -190,7 +191,9 @@ public class UserProfileFragment extends Fragment {
                                 public void onResponse(Call<ChangeUserName> call, Response<ChangeUserName> response1) {
                                     if (response1.body() != null) {
                                         if (response1.body().getStatusCode() == 200) {
-                                            SetUpActivity.getmSwitchToOtherFragments().goToRulesFragment();
+                                            Intent intent = new Intent(getActivity(), LaunchingActivity.class);
+                                            startActivity(intent);
+                                            getActivity().finish();
                                             tint.setVisibility(View.INVISIBLE);
                                             animationView.setVisibility(View.INVISIBLE);
                                             if(getActivity()!=null)

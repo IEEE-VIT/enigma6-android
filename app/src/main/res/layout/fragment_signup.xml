@@ -1,213 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="vertical"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:scrollbars="vertical">
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#121212"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/hoodie_sign_up_image"
-        android:layout_width="match_parent"
-        android:layout_height="182dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/hoodie_h" />
-
-
-    <TextView
-        android:id="@+id/sign_up_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_up"
-        android:textColor="@color/black"
-        android:textSize="48sp"
-        app:fontFamily="@font/chosence"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@id/hoodie_sign_up_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.272"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.438" />
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout1"
-        android:layout_width="279dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="32dp"
-        android:clickable="true"
-        android:focusableInTouchMode="false"
-        android:hint="@string/email"
-        android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hoodie_sign_up_image">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_text_edit_sign_up_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="true"
-            android:focusableInTouchMode="true"
-            android:paddingLeft="20dp"
-            android:paddingRight="5dp"
-            android:singleLine="true"
-            android:textColorLink="@color/white"
-            android:textStyle="normal"
-            app:fontFamily="@font/saira" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
-        android:layout_width="279dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusableInTouchMode="false"
-        android:hint="@string/password"
-        android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout1"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/white">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_text_edit_sign_up_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="true"
-            android:focusableInTouchMode="true"
-            android:inputType="textPassword"
-            android:paddingLeft="20dp"
-            android:paddingRight="5dp"
-            android:textStyle="normal"
-            app:backgroundTint="@color/white"
-            app:fontFamily="@font/saira" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
-        android:layout_width="279dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="24dp"
-        android:focusableInTouchMode="false"
-        android:hint="@string/confirm_password"
-        android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/white">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/confirm_password_text_edit_sign_up_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cursorVisible="true"
-            android:focusableInTouchMode="true"
-            android:inputType="textPassword"
-            android:paddingLeft="20dp"
-            android:paddingRight="5dp"
-            android:textStyle="normal"
-            app:fontFamily="@font/saira" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <TextView
-        android:id="@+id/no_account_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/account"
-        android:textColor="@color/blue"
-        android:textSize="16sp"
-        android:textStyle="normal"
-        app:fontFamily="@font/saira"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout3" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/sign_up_button_sign_up_fragment"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:shadowRadius="8"
-        android:text="@string/sign_up"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="normal"
-        app:backgroundTint="@color/yellow"
-        app:fontFamily="@font/saira"
-        app:layout_constraintBottom_toTopOf="@+id/no_account_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/login_text_view_sign_up_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:text="@string/login"
-        android:textColor="@color/blue"
-        android:textSize="16sp"
-        app:fontFamily="@font/saira"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/no_account_text"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toEndOf="@+id/no_account_text" />
-
-    <ImageView
-        android:id="@+id/sign_up_tint"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.75"
-        android:visibility="invisible"
-        android:foreground="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="#121212"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/hoodie_sign_up_image"
+            android:layout_width="match_parent"
+            android:layout_height="182dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/hoodie_h" />
 
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_animation_signup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/custom_load"/>
+        <ImageView
+            android:id="@+id/sign_up_tint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.75"
+            android:foreground="@color/black"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/no_account_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/account"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            app:fontFamily="@font/saira"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/login_text_view_sign_up_fragment"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/login_text_view_sign_up_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/login"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/saira"
+            app:layout_constraintBottom_toBottomOf="@+id/no_account_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/no_account_text" />
+
+        <TextView
+            android:id="@+id/sign_up_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:textColor="@color/black"
+            android:textSize="48sp"
+            android:textStyle="normal"
+            app:fontFamily="@font/chosence"
+            app:layout_constraintBottom_toBottomOf="@id/hoodie_sign_up_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.272"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.438" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/sign_up_button_sign_up_fragment"
+            app:layout_constraintTop_toBottomOf="@+id/hoodie_sign_up_image">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout1"
+                android:layout_width="279dp"
+                android:layout_height="71dp"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusableInTouchMode="false"
+                android:hint="@string/email"
+                android:textColorHint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_text_edit_sign_up_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="true"
+                    android:focusableInTouchMode="true"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="5dp"
+                    android:singleLine="true"
+                    android:textColorLink="@color/white"
+                    android:textStyle="normal"
+                    app:fontFamily="@font/saira" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                android:layout_width="279dp"
+                android:layout_height="71dp"
+                android:layout_marginTop="24dp"
+                android:clickable="true"
+                android:focusableInTouchMode="false"
+                android:hint="@string/password"
+                android:textColorHint="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout1"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password_text_edit_sign_up_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="true"
+                    android:focusableInTouchMode="true"
+                    android:inputType="textPassword"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="5dp"
+                    android:textStyle="normal"
+                    app:backgroundTint="@color/white"
+                    app:fontFamily="@font/saira" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout3"
+                android:layout_width="279dp"
+                android:layout_height="71dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:focusableInTouchMode="false"
+                android:hint="@string/confirm_password"
+                android:textColorHint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirm_password_text_edit_sign_up_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cursorVisible="true"
+                    android:focusableInTouchMode="true"
+                    android:inputType="textPassword"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="5dp"
+                    android:textStyle="normal"
+                    app:fontFamily="@font/saira" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/custom_load" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sign_up_button_sign_up_fragment"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:shadowRadius="8"
+            android:text="@string/sign_up"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            app:backgroundTint="@color/yellow"
+            app:fontFamily="@font/saira"
+            app:layout_constraintBottom_toTopOf="@+id/no_account_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

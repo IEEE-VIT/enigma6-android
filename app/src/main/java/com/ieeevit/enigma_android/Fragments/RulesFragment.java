@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ieeevit.enigma_android.Activities.LaunchingActivity;
 import com.ieeevit.enigma_android.Activities.WorkingActivity;
 import com.ieeevit.enigma_android.Adapters.RulesAdapter;
 import com.ieeevit.enigma_android.Models.Rules;
@@ -41,7 +42,7 @@ public class RulesFragment extends Fragment {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), WorkingActivity.class);
+                Intent intent = new Intent(getActivity(), LaunchingActivity.class);
                 getActivity().finish();
                 startActivity(intent);
             }
