@@ -4,9 +4,20 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="black">#121212</color>
-    <color name="white">#ffffff</color>
-    <color name="yellow">#f3df3b</color>
+    <color name="white">#FFFFFF</color>
+    <color name="yellow">#F3DF3B</color>
     <color name="blue">#cef6f9</color>
     <color name="grey">#262626</color>
+    <color name="darkGrey">#303030</color>
     <color name="green">#61f793</color>
+    <color name="lightGrey">#3a3a3a</color>
+    <color name="majenta">#bb1582</color>
+    <color name="purple">#a422ff</color>
+    <color name="background">#dddddd</color>
+    <color name="snow">#EEE9E9</color>
+    <color name="jet_black">#000000</color>
+
+    <color name="colorErrorSnackbar">#D93B38</color>
+    <color name="colorSuccessSnackbar">#39C79D</color>
+
 </resources>

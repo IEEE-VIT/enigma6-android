@@ -1,13 +1,19 @@
 <resources>
-    <string name="app_name">Enigma Android</string>
+    <string name="app_name">Enigma 6.0</string>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
+    <string name="linkedln">Linkedln</string>
+    <string name="github">Github</string>
+    <string name="twitter">Twitter</string>
     <string name="login">Login</string>
     <string name="account">Already have an account?</string>
     <string name="no_account">Don\'t have an account?</string>
-
     <string name="sign_up">SIGN UP</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="password">Password</string>
+    <string name="USERNAME">USERNAME</string>
     <string name="email">Email</string>
+    <string name="EMAIL">EMAIL</string>
     <string name="facebook_login">Login using facebook</string>
     <string name="google_login">Login using google</string>
     <string name="or">OR</string>
@@ -17,7 +23,28 @@
     <string name="last_name">Last Name</string>
     <string name="username">Username</string>
     <string name="done">DONE</string>
-
+    <string name="score">SCORE</string>
+    <string name="play">PLAY</string>
+    <string name="rank">RANK</string>
+    <string name="rules">RULES</string>
+    <string name="rules1">Rules</string>
+    <string name="profile">PROFILE</string>
+    <string name="profile1">Profile</string>
+    <string name="game">Game</string>
+    <string name="enigma">ENIGMA</string>
+    <string name="version">6.0</string>
+    <string name="sponsor">Powered By Deep Learning demystified</string>
+    <string name="leaderboard">LEADERBOARD</string>
+    <string name="leaderboard1">Leaderboard</string>
+    <string name="logout">LOGOUT</string>
+    <string name="logout1">Logout</string>
+    <string name="submit">SUBMIT</string>
+    <string name="name">NAME</string>
+    <string name="answer">Type Your Answer Here</string>
+    <string name="hints_used">HINTS USED</string>
+    <string name="questions_solved">QUESTIONS SOLVED</string>
+    <string name="save_username">Save new username</string>
+    <string name="send_email_forgot_password">We will send a link to your registered email.</string>
     //Facebook
     <string name="facebook_app_id">2419120248362869</string>
     <string name="fb_login_protocol_scheme">fb2419120248362869</string>
